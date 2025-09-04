@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.springGroupS.service.Study1Service;
+import com.spring.springGroupS.vo.BmiVO;
 import com.spring.springGroupS.vo.HoewonVO;
 import com.spring.springGroupS.vo.SiteInfor2VO;
 import com.spring.springGroupS.vo.SiteInforVO;
@@ -27,22 +28,22 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping ("/study1")
+@RequestMapping("/study1")
 public class Study1Controller {
 	
-//	@Inject
 	@Autowired
 	Study1Service study1Service;
 	
-	//QueryString 방식 값전달
+	// QueryString 방식을 통한 값의 전달
+	
 	//@RequestMapping(value = "/study1/mapping/test1", method = RequestMethod.GET)
 	@GetMapping("/mapping/menu")
 	public String menuGet() {
 		return "study1/mapping/menu";
 	}
 	
-	@GetMapping("/mapping/test01")
-	public String test01Get(HttpServletRequest request) {
+	@GetMapping("/mapping/test1")
+	public String test1Get(HttpServletRequest request) {
 		String mid = request.getParameter("mid");
 		String pwd = request.getParameter("pwd");
 		
@@ -52,59 +53,55 @@ public class Study1Controller {
 		return "study1/mapping/test01";
 	}
 	
-	@GetMapping("/mapping/test02")
-	public String test02Get(Model model, String mid, String pwd) {
+	@GetMapping("/mapping/test2")
+	public String test2Get(Model model, String mid, String pwd) {
 		model.addAttribute("mid", mid);
 		model.addAttribute("pwd", pwd);
-		
 		return "study1/mapping/test02";
 	}
 	
-	@GetMapping("/mapping/test03")
-	public String test03Get(Model model, 
-			@RequestParam(name="mid") String mid, 
-			@RequestParam(name="pwd") String passwd) {
-		model.addAttribute("mid", mid);
+	@GetMapping("/mapping/test3")
+	public String test3Get(Model model, 
+			@RequestParam(name="mid") String id, 
+			@RequestParam(name="pwd") String passwd
+		) {
+		model.addAttribute("mid", id);
 		model.addAttribute("pwd", passwd);
-		
 		return "study1/mapping/test03";
 	}
 	
-	@GetMapping("/mapping/test04")
-	public String test04Get(Model model, 
-			@RequestParam(name="mid") String mid, 
+	@GetMapping("/mapping/test4")
+	public String test4Get(Model model, 
+			@RequestParam(name="mid") String id, 
 			@RequestParam(name="pwd") String passwd,
 			@RequestParam(name="name", defaultValue = "손님", required = false) String name,
 			@RequestParam(name="sex") int sex
 			) {
-		String gender = "";
 		
+		String gender = "";
 		if(sex == 1 || sex == 3) gender = "남자";
 		else if(sex == 2 || sex == 4) gender = "여자";
-		else gender="genderless";
-
-		model.addAttribute("mid", mid);
+		else gender = "중성";
+		
+		model.addAttribute("mid", id);
 		model.addAttribute("pwd", passwd);
 		model.addAttribute("name", name);
 		model.addAttribute("gender", gender);
-		
-		
 		return "study1/mapping/test04";
 	}
 	
-	@GetMapping("/mapping/test05")
-	public String test05Get(Model model, String mid, String pwd, String name, String gender, int age) {
+	@GetMapping("/mapping/test5")
+	public String test5Get(Model model, String mid, String pwd, String name, String gender, int age) {
 		model.addAttribute("mid", mid);
 		model.addAttribute("pwd", pwd);
 		model.addAttribute("name", name);
 		model.addAttribute("gender", gender);
 		model.addAttribute("age", age);
-		
 		return "study1/mapping/test05";
 	}
 	
-	@GetMapping("/mapping/test06")
-	public String test06Get(Model model, String mid, String pwd, String name, String gender, int age) {
+	@GetMapping("/mapping/test6")
+	public String test6Get(Model model, String mid, String pwd, String name, String gender, int age) {
 		HoewonVO vo = new HoewonVO();
 		
 		vo.setMid(mid);
@@ -114,13 +111,12 @@ public class Study1Controller {
 		vo.setAge(age);
 		
 		model.addAttribute("vo", vo);
-		
 		return "study1/mapping/test06";
 	}
 	
-	@GetMapping("/mapping/test07")
-	public String test07Get(Model model, String mid, String pwd, String name, String gender, int age, HoewonVO vo) {
-		// HoewonVO vo = new HoewonVO();
+	@GetMapping("/mapping/test7")
+	public String test7Get(Model model, String mid, String pwd, String name, String gender, int age, HoewonVO vo) {
+		//HoewonVO vo = new HoewonVO();
 		
 		vo.setMid(mid);
 		vo.setPwd(pwd);
@@ -129,32 +125,29 @@ public class Study1Controller {
 		vo.setAge(age);
 		
 		model.addAttribute("vo", vo);
-		
 		return "study1/mapping/test07";
 	}
 	
-	@GetMapping("/mapping/test08")
-	public String test08Get(Model model, HoewonVO vo) {
+	@GetMapping("/mapping/test8")
+	public String test8Get(Model model, HoewonVO vo) {
 		model.addAttribute("vo", vo);
-		
 		return "study1/mapping/test08";
 	}
 	
-	@GetMapping("/mapping/test09")
-	public ModelAndView test09Get(Model model, HoewonVO vo) {
+	@GetMapping("/mapping/test9")
+	public ModelAndView test9Get(HoewonVO vo) {
 		ModelAndView mv = new ModelAndView("study1/mapping/test09");
 		mv.addObject("vo", vo);
-		
 		return mv;
 	}
 	
-	// ----------------------------------------------------------
-	// Path Variable방식 값전달연습
+	/* ---------------------------------------------- */
+	
+	// Path Variable방식으로의 값전달연습
 	@GetMapping("/mapping/test21/{mid}/{pwd}")
 	public String test21Get(Model model, @PathVariable String mid, @PathVariable String pwd) {
 		model.addAttribute("mid", mid);
 		model.addAttribute("pwd", pwd);
-		
 		return "study1/mapping/test21";
 	}
 	
@@ -162,7 +155,6 @@ public class Study1Controller {
 	public String test22Get(Model model, @PathVariable String id, @PathVariable String passwd) {
 		model.addAttribute("mid", id);
 		model.addAttribute("pwd", passwd);
-		
 		return "study1/mapping/test22";
 	}
 	
@@ -170,27 +162,27 @@ public class Study1Controller {
 	public String test23Get(Model model, @PathVariable String id, @PathVariable String passwd) {
 		model.addAttribute("mid", id);
 		model.addAttribute("pwd", passwd);
-		
 		return "study1/mapping/test23";
 	}
 	
 	@GetMapping("/mapping/{passwd}/{temp}/test24/{id}")
-	public String test24Get(Model model, @PathVariable String id, @PathVariable String temp, @PathVariable String passwd) {
+	public String test24Get(Model model, @PathVariable String id, @PathVariable String passwd) {
 		model.addAttribute("mid", id);
 		model.addAttribute("pwd", passwd);
-		
 		return "study1/mapping/test24";
 	}
 	
 	@GetMapping("/mapping/test25/{mid}/{pwd}/{name}/{temp}/{gender}/{age}")
-	public String test25Get(Model model, HoewonVO vo) {
+	public String test25Get(Model model, HoewonVO vo
+		) {
 		model.addAttribute("vo", vo);
-		
 		return "study1/mapping/test25";
 	}
 	
-	//-------------------------------------------------------------------------
+	/* ====================================================== */
+	
 	// Post방식에 의한 값의 전달
+	
 	//@GetMapping("/mapping/test31")
 	//@RequestMapping(value = "/mapping/test31", method = RequestMethod.POST)
 	@PostMapping("/mapping/test31")
@@ -226,6 +218,7 @@ public class Study1Controller {
 	public String test33Get(Model model, String mid, HoewonVO vo) {
 		// 아이디로 DB에서 회원정보를 가져와서 VO에 담아서 jsp로 넘겨준다.
 		vo.setMid(mid);
+		
 		model.addAttribute("vo", vo);
 		
 		return "study1/mapping/test33";
@@ -245,18 +238,19 @@ public class Study1Controller {
 	
 	@PostMapping("/mapping/test34")
 	public String test34Post(Model model, HoewonVO vo) {
-		// DB에 회원 정보를 저장시킨다.(회원가입처리)
+	  // DB에 회원 정보를 저장시킨다.(회원가입처리)
 		System.out.println("1.이곳은 회원 정보를 DB에 저장처리하고 있습니다.");
+		
 		model.addAttribute("message","회원 가입 되었습니다.");
-//		model.addAttribute("url","/study1/mapping/test34");
 		model.addAttribute("vo", vo);
+		
 		return "study1/mapping/test34";
 	}
 	
 	@GetMapping("/mapping/test35")
 	public String test35Get(Model model, HoewonVO vo) {
 		// 아이디로 DB에서 회원정보를 가져와서 VO에 담아서 jsp로 넘겨준다.
-//		vo.setMid(mid);
+		// vo.setMid(mid);
 		
 		model.addAttribute("vo", vo);
 		
@@ -268,12 +262,11 @@ public class Study1Controller {
 		// 회원아이디의 첫글자가 'a'로 시작하는 회원만 가입처리하도록 한다.
 		
 		if(vo.getMid().substring(0, 1).equals("a")) {
-			
 			// DB에 회원 정보를 저장시킨다.(회원가입처리)
 			System.out.println("2.이곳은 회원 정보를 DB에 저장처리하고 있습니다.");
-		
 			return "redirect:/message/hoewonInputOk?mid="+vo.getMid();
-		}else return "redirect:/message/hoewonInputNo";
+		}
+		else return "redirect:/message/hoewonInputNo";
 	}
 	
 	@GetMapping("/aop/aopMenu")
@@ -323,12 +316,25 @@ public class Study1Controller {
 		return "study1/aop/aopMenu";
 	}
 	
+	@GetMapping("/aop/test5")
+	public String aopTest5Get() {
+		// log.info("study1컨트롤러의 test5메소드입니다.");
+		
+		study1Service.getAopServiceTest1();
+		study1Service.getAopServiceTest2();
+		study1Service.getAopServiceTest3();
+		study1Service.getAopServiceTest52();
+		study1Service.getAopServiceTest53();
+		
+		return "study1/aop/aopMenu";
+	}
+	
 	// XML 값 주입연습 메뉴
 	@GetMapping("/xml/xmlMenu")
 	public String xmlMenuGet() {
 		return "study1/xml/xmlMenu";
 	}
-
+	
 	@GetMapping("/xml/xmlTest1")
 	public String xmlTest1Get(Model model) {
 		AbstractApplicationContext context = new GenericXmlApplicationContext("xml/sungjuk.xml");
@@ -356,6 +362,25 @@ public class Study1Controller {
 		return "study1/xml/xmlTest1";
 	}
 	
+	@GetMapping("/xml/xmlTest2")
+	public String xmlTest2Get(Model model) {
+		AbstractApplicationContext context = new GenericXmlApplicationContext("xml/sungjuk.xml");
+		
+		List<SungjukVO> vos = new ArrayList<SungjukVO>();
+		SungjukVO vo = null;
+		for(int i=1; i<=3; i++) {
+			String str = "vo" + i;
+			vo = context.getBean(str, SungjukVO.class);
+			vo = study1Service.getSungjukCalc(vo);
+			vos.add(vo);
+		}
+		
+		model.addAttribute("vos", vos);
+		
+		context.close();
+		return "study1/xml/xmlTest2";
+	}
+	
 	@GetMapping("/xml/xmlTest3")
 	public String xmlTest3Get(Model model) {
 		AbstractApplicationContext context = new GenericXmlApplicationContext("xml/siteInfor.xml");
@@ -377,7 +402,30 @@ public class Study1Controller {
 		model.addAttribute("vo", vo);
 		
 		context.close();
-		return "study1/xml/xmlTe";
+		return "study1/xml/xmlTest3";
 	}
+	
+	@GetMapping("/xml/xmlTest5")
+	public String xmlTest5Get(Model model) {
+		AbstractApplicationContext context = new GenericXmlApplicationContext("xml/bmi.xml");
+		
+		List<BmiVO> vos = new ArrayList<BmiVO>();
+		
+		BmiVO vo = null;
+		for(int i=1; i<=5; i++) {
+			String str = "person" + i;
+			vo = context.getBean(str, BmiVO.class);
+			if(vo.getName().equals("")) break;
+			vo = study1Service.getBmiCalc(vo);
+			vos.add(vo);
+		}
+		
+		model.addAttribute("vos", vos);
+		
+		context.close();
+		return "study1/xml/xmlTest5";
+	}
+	
+	
 	
 }
