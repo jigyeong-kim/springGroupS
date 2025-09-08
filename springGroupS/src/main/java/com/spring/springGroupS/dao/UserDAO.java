@@ -8,6 +8,8 @@ public interface UserDAO {
 
 	List<UserVO> getUserList();
 
+	UserVO getUserSearch(String mid);
+
 		
 	
 }

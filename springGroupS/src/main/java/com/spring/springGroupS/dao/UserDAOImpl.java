@@ -20,4 +20,9 @@ public class UserDAOImpl implements UserDAO {
 		return vos;
 	}
 	
+	@Override
+	public UserVO getUserSearch(String mid) {
+		UserVO vo = sqlSession.selectOne("userNS.getUserSearch", mid);
+		return vo;
+	}
 }

@@ -27,4 +27,13 @@ public class UserController {
 		return "user/userList";
 	}
 	
+	@GetMapping("/userSearch")
+	public String userSearchGet(Model model, String mid) {
+		//mid = "hkd1234";
+		UserVO vo = userService.getUserSearch(mid);
+		
+		System.out.println("vo : " + vo);
+		
+		return "";
+	}
 }
