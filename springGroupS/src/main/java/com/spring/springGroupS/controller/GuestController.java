@@ -100,4 +100,9 @@ public class GuestController {
 		if(res != 0) return "redirect:/message/guestDeleteOk";
 		else return "redirect:/message/guestDeleteNo";
 	}
+	
+	@GetMapping("/member")
+	public String memberGet() {
+		return "member/member";
+	}
 }
