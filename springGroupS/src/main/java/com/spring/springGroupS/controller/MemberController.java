@@ -1,22 +1,41 @@
 package com.spring.springGroupS.controller;
 
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.springGroupS.common.ProjectProvide;
 import com.spring.springGroupS.service.MemberService;
+import com.spring.springGroupS.vo.MailVO;
+import com.spring.springGroupS.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 	
 	@Autowired
-	//MemberService memberService;
+	MemberService memberService;
+	
+	@Autowired
+	JavaMailSender mailSender;
+	
+	@Autowired
+	ProjectProvide projectProvide;
 	
 	// 로그인 폼
 	@GetMapping("/memberLogin")
@@ -74,4 +93,41 @@ public class MemberController {
 		return "member/memberJoin";
 	}
 	
+	// 아이디 중복체크처리
+	@ResponseBody
+	@PostMapping("/memberIdCheck")
+	public MemberVO memberIdCheckGet(String mid) {
+		return memberService.getMemberIdCheck(mid);
+	}
+	
+	// 닉네임 중복체크처리
+	@ResponseBody
+	@PostMapping("/memberNickCheck")
+	public MemberVO memberNickCheckGet(String nickName) {
+		return memberService.getMemberNickCheck(nickName);
+	}
+	
+	// 회원가입시 이메일로 인증번호 전송하기
+	@ResponseBody
+	@PostMapping("/memberEmailCheck")
+	public int memberEmailCheckPost(String email, HttpSession session) throws MessagingException {
+		String emailKey = UUID.randomUUID().toString().substring(0, 8);
+		
+		// 이메일 인증키를 세션에 저장시켜준다.(2분안에 인증하지 못하면 다시 발행하기)
+		session.setAttribute("sEmailKey", emailKey);
+		
+		projectProvide.mailSend(email, "이메일 인증키입니다.", "이메일 인증키 : " + emailKey);
+		
+		return 1;
+	}
+	
+	// 회원가입시 이메일로 인증번호받은 인증키 확인하기
+	@ResponseBody
+	@PostMapping("/memberEmailCheckOk")
+	public int memberEmailCheckOkPost(String checkKey, HttpSession session){
+		String emailKey = (String) session.getAttribute("sEmailKey");
+		
+		if(checkKey.equals(emailKey)) return 1;
+		return 0;
+	}
 }

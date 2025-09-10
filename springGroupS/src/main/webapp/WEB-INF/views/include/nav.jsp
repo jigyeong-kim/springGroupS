@@ -20,10 +20,12 @@
         <a href="${ctp}/user2/userList" class="w3-bar-item w3-button">User2 List</a>
         <a href="${ctp}/study1/restApi/restApiForm" class="w3-bar-item w3-button">Rest API</a>
         <a href="${ctp}/study1/ajax/ajaxForm" class="w3-bar-item w3-button">Ajax Test</a>
-        <a href="${ctp}/study1/password/passwordForm" class="w3-bar-item w3-button">암호화 </a>
+        <a href="${ctp}/study1/password/passwordForm" class="w3-bar-item w3-button">암호화 연습</a>
+        <a href="${ctp}/study1/mail/mailForm" class="w3-bar-item w3-button">메일 연습</a>
+        <a href="${ctp}/study1/fileUpload/fileUploadForm" class="w3-bar-item w3-button">파일업로드 연습</a>
       </div>
     </div>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
+    <a href="${ctp}/member/memberLogin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Login</a>
 	<a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Logout</a>
 	<a href="${ctp}/member/memberJoin" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Join</a>
     <!-- <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a> -->
