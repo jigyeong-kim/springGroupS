@@ -10,4 +10,10 @@ public interface MemberDAO {
 
 	MemberVO getMemberNickCheck(@Param("nickName") String nickName);
 
+	int setMemberJoin(@Param("vo") MemberVO vo);
+
+	void setLastDateUpdate(@Param("mid") String mid);
+
+	int setMemberPwdChange(@Param("mid") String mid, @Param("pwd") String pwd);
+
 }

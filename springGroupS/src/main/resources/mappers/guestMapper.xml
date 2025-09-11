@@ -9,6 +9,10 @@
 	<select id="getTotRecCnt" resultType="int">
 		select count(*) from guest;
 	</select>
+
+	<select id="getMemberSearch" resultType="int">
+		select count(*) from guest where name=#{mid} or name=#{nickName} or name=#{name};
+	</select>
 	
 	<insert id="setGuestInput">
 		insert into guest values (default,#{vo.name},#{vo.content},#{vo.email},#{vo.homePage}, default, #{vo.hostIp});
@@ -17,4 +21,6 @@
 	<delete id="setGuestDelete">
 		delete from guest where idx = #{idx};
 	</delete>
+	
+	
 </mapper>

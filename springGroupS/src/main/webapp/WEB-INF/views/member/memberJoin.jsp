@@ -81,7 +81,7 @@
         myform.email1.focus();
         return false;
       }
-      else if((homePage != "http://" && homePage != "")) {
+      else if((homePage != "https://" && homePage != "")) {
         if(!regURL.test(homePage)) {
 	        alert("작성하신 홈페이지 주소가 URL 형식에 맞지않습니다.");
 	        myform.homePage.focus();
@@ -172,7 +172,7 @@
 					}
 					else {
 						alert("사용 가능한 아이디 입니다.");
-						document.getElementById("mid").disabled = true;
+						document.getElementById("mid").readOnly = true;
 						if(document.getElementById("pwd").value == '') document.getElementById("pwd").focus();
 		    		idCheckSw = 1;
 					}
@@ -202,7 +202,7 @@
 					}
 					else {
 						alert("사용 가능한 닉네임 입니다.");
-						document.getElementById("nickName").disabled = true;
+						document.getElementById("nickName").readOnly = true;
 						if(document.getElementById("name").value == '') document.getElementById("name").focus();
 						nickCheckSw = 1;
 					}
@@ -273,9 +273,11 @@
     				alert("인증번호가 발송되었습니다.\n메일확인후 인증번호를 입력해주세요.");
     				let str = '<div class="input-group mb-3">';
     				str += '<input type="text" name="checkKey" id="checkKey" class="form-control"/>';
-    				str += '<input type="button" value="인증번호확인" onclick="emailCertificationOk()" class="btn btn-primary"/>';
+    				str += '<span id="timeLimit" class="input-group-text"></span>';	// 인증시간 만료를 알리기위한 타이머삽입
+    				str += '<input type="button" value="인증번호확인" onclick="emailCertificationOk()" class="btn btn-primary btn-sm"/>';
     				str += '</div>';
     				$("#demoSpin").html(str);
+    				timer();
     			}
     			else alert("인증번호 확인버튼을 다시 눌러주세요!");
     		},
@@ -298,6 +300,7 @@
     		data : {checkKey : checkKey},
     		success: (res) => {
     			if(res == 1) {
+    				clearInterval(interval);
     				$("#demoSpin").hide();
     				$("#addContent").show();
     			}
@@ -306,6 +309,30 @@
     		error : () => alert("전송오류")
     	});
     }
+    
+	  // 인증번호 입력 제한시간 처리(2분 = 120초)
+	  let timeLimit = 120;
+	  let interval;
+	  function timer() {
+      interval = setInterval(() => {
+	      $("#timeLimit").html("남은 시간: "+timeLimit+"초");
+	            
+	      // 할당받은 시간(120초)를 모두 사용하면 기존에 전송받은 인증번호를 제거시키고 다시 인증번호를 전송받도록한다.
+	      if(timeLimit == 0) {
+          $("#demoSpin").html("");
+          timeLimit = 120;
+
+          $.ajax({
+             url : "${ctp}/member/memberEmailCheckNo",
+             type: "post",
+             success : () => alert("인증시간이 만료되었습니다.\n인증번호를 다시 받아주세요."),
+             error : () => alert("전송오류")
+          });
+          clearInterval(interval);
+	      }
+	      timeLimit--;
+      }, 1000);
+	  }
     
   </script>
   <style>
@@ -317,7 +344,7 @@
 <jsp:include page="/WEB-INF/views/include/slide2.jsp" />
 <p><br/></p>
 <div class="container">
-  <form name="myform" method="post" class="was-validated">
+  <form name="myform" method="post" class="was-validated" enctype="multipart/form-data">
     <h2 class="text-center">회 원 가 입</h2>
     <br/>
     <div class="input-group mb-3">

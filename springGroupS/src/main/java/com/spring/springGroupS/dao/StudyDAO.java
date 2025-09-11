@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.springGroupS.vo.MemberVO;
 import com.spring.springGroupS.vo.UserVO;
 
 public interface StudyDAO {
@@ -14,7 +15,7 @@ public interface StudyDAO {
 	UserVO getUserMidSearch(@Param("mid") String mid);
 
 	ArrayList<UserVO> getUserListSearch(@Param("mid") String mid);
-
-	List<UserVO> getMailJusoList();
+	
+	List<MemberVO> getMemberList();
 	
 }

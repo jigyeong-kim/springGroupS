@@ -37,6 +37,7 @@ import com.spring.springGroupS.service.StudyService;
 import com.spring.springGroupS.vo.BmiVO;
 import com.spring.springGroupS.vo.HoewonVO;
 import com.spring.springGroupS.vo.MailVO;
+import com.spring.springGroupS.vo.MemberVO;
 import com.spring.springGroupS.vo.SiteInfor2VO;
 import com.spring.springGroupS.vo.SiteInforVO;
 import com.spring.springGroupS.vo.SungjukVO;
@@ -607,9 +608,11 @@ public class Study1Controller {
 
 		// 메일 작성폼 보기
 		@GetMapping("/mail/mailForm")
-		public String mailFormGet(Model model)  {
-			List<UserVO> vos = studyService.getMailJusoList(); // DB에서 주소록 리스트 가져오기
-		    model.addAttribute("mailJusoList", vos);
+		public String mailFormGet(Model model) {
+			List<MemberVO> memberVos = studyService.getMemberList();
+			model.addAttribute("memberVos", memberVos);
+			model.addAttribute("memberCnt", memberVos.size());
+			
 			return "study1/mail/mailForm";
 		}
 		

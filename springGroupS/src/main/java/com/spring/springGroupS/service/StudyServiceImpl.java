@@ -16,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.springGroupS.dao.StudyDAO;
+import com.spring.springGroupS.vo.MemberVO;
 import com.spring.springGroupS.vo.UserVO;
 
 @Service
@@ -178,8 +179,8 @@ public class StudyServiceImpl implements StudyService {
 	}
 
 	@Override
-	public List<UserVO> getMailJusoList() {
-		return studyDAO.getMailJusoList();
+	public List<MemberVO> getMemberList() {
+		return studyDAO.getMemberList();
 	}
 	
 }

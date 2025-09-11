@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.springGroupS.vo.MemberVO;
 import com.spring.springGroupS.vo.UserVO;
 
 public interface StudyService {
@@ -21,6 +22,6 @@ public interface StudyService {
 
 	int setFileUpload(MultipartFile fName, String mid);
 
-	List<UserVO> getMailJusoList();
+	List<MemberVO> getMemberList();
 
 }

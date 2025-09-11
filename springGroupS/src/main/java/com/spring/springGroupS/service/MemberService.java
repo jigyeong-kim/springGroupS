@@ -8,6 +8,13 @@ public interface MemberService {
 
 	MemberVO getMemberNickCheck(String nickName);
 
+	int setMemberJoin(MemberVO vo);
+
+	void setLastDateUpdate(String mid);
+
+	int setMemberPwdChange(String mid, String pwd);
+
+
 	
 
 

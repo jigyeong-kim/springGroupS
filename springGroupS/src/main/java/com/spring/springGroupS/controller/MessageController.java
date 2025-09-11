@@ -1,5 +1,7 @@
 package com.spring.springGroupS.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MessageController {
 
 	@RequestMapping(value = "/message/{msgFlag}", method = RequestMethod.GET)
-	public String getMessage(Model model,
+	public String getMessage(Model model, HttpSession session,
 			@PathVariable String msgFlag,
 			@RequestParam(name="mid", defaultValue = "", required = false) String mid,
 			@RequestParam(name="idx", defaultValue = "", required = false) String idx
@@ -69,6 +71,14 @@ public class MessageController {
 			model.addAttribute("message", "관리자 로그아웃");
 			model.addAttribute("url", "/guest/guestList");
 		}
+		else if(msgFlag.equals("memberLoginOk")) {
+			model.addAttribute("message", mid+"님 로그인 되셨습니다.");
+			model.addAttribute("url", "/member/memberMain");
+		}
+		else if(msgFlag.equals("memberLoginNo")) {
+			model.addAttribute("message", "로그인 실패~~");
+			model.addAttribute("url", "/member/memberLogin");
+		}
 		else if(msgFlag.equals("guestDeleteOk")) {
 			model.addAttribute("message", "방명록 삭제 성공");
 			model.addAttribute("url", "/guest/guestList");
@@ -89,7 +99,39 @@ public class MessageController {
 			model.addAttribute("message", "파일 업로드 실패");
 			model.addAttribute("url", "/study1/fileUpload/fileUploadForm");
 		}
-		
+		else if(msgFlag.equals("idCheckNo")) {
+			model.addAttribute("message", "사용중인 아이디입니다.");
+			model.addAttribute("url", "/member/memberJoin");
+		}
+		else if(msgFlag.equals("nickNameCheckNo")) {
+			model.addAttribute("message", "사용중인 닉네임입니다.");
+			model.addAttribute("url", "/member/memberJoin");
+		}
+		else if(msgFlag.equals("memberJoinOk")) {
+			model.addAttribute("message", "회원가입 성공");
+			model.addAttribute("url", "/member/memberLogin");
+		}
+		else if(msgFlag.equals("memberJoinNo")) {
+			model.addAttribute("message", "회원가입 실패");
+			model.addAttribute("url", "/member/memberJoin");
+		}
+		else if(msgFlag.equals("loginError")) {
+			model.addAttribute("message", "로그인후 사용하세요");
+			model.addAttribute("url", "/member/memberJoin");
+		}
+		else if(msgFlag.equals("levelNo")) {
+			model.addAttribute("message", "등급을 확인해주세요");
+			model.addAttribute("url", "/member/memberJoin");
+		}
+		else if(msgFlag.equals("passWordChangeOK")) {
+			session.invalidate();
+			model.addAttribute("message", "비밀번호를 변경했습니다. 다시 로그인해 주세요");
+			model.addAttribute("url", "/member/memberLogin");
+		}
+		else if(msgFlag.equals("passWordChangeNO")) {
+			model.addAttribute("message", "비밀번호 변경 실패");
+			model.addAttribute("url", "/member/memberPwdCheck");
+		}
 		
 		return "include/message";
 	}

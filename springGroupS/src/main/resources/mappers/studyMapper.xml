@@ -14,8 +14,8 @@
 		select * from user where mid like concat('%', #{mid}, '%');
 	</select>
 	
-	<select id="getMailJusoList" resultType="com.spring.springGroupS.vo.UserVO">
-		SELECT name, email FROM   mail_juso ORDER BY name;
+	<select id="getMemberList" resultType="com.spring.springGroupS.vo.MemberVO">
+		select * from member order by mid;
 	</select>
 	
 </mapper>
