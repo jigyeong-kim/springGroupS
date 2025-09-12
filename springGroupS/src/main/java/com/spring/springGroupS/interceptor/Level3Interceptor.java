@@ -6,17 +6,20 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class Level3Interceptor extends HandlerInterceptorAdapter{
+public class Level3Interceptor extends HandlerInterceptorAdapter {
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
-		int level = session.getAttribute("sLevel")==null?99:(Integer)session.getAttribute("sLevel");
+		int level = session.getAttribute("sLevel")==null ? 99 : (int) session.getAttribute("sLevel");
 		
 		if(level > 3) {
-			request.getRequestDispatcher("message/loginError").forward(request, response);
+			request.getRequestDispatcher("/message/loginError").forward(request, response);
+			
 			return false;
 		}
 		
 		return true;
-	}
+	} 
+	
 }

@@ -132,6 +132,18 @@ public class MessageController {
 			model.addAttribute("message", "비밀번호 변경 실패");
 			model.addAttribute("url", "/member/memberPwdCheck");
 		}
+		else if(msgFlag.equals("nickCheckNO")) {
+			model.addAttribute("message", "사용중인 닉네임입니다.");
+			model.addAttribute("url", "/member/memberUpdate?mid="+mid);
+		}
+		else if(msgFlag.equals("memberUpdateOk")) {
+			model.addAttribute("message", "회원정보수정 완료");
+			model.addAttribute("url", "/member/memberUpdate?mid="+mid);
+		}
+		else if(msgFlag.equals("memberUpdateNo")) {
+			model.addAttribute("message", "회원정보수정 실패");
+			model.addAttribute("url", "/member/memberUpdate?mid="+mid);
+		}
 		
 		return "include/message";
 	}

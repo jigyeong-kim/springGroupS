@@ -11,7 +11,7 @@
 <script>
 	'use strict'
 	
-	let regEmail =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+	/* let regEmail =/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 	
 	// 이메일 인증번호 받기
     function emailCertification() {
@@ -98,7 +98,7 @@
 	      }
 	      timeLimit--;
       }, 1000);
-	  }
+	  } */
 </script>
 </head>
 <body>
@@ -108,34 +108,28 @@
 		<h2>아이디 찾기</h2>
 		
 		<form name="memberIdFind" id="memberIdFind" method="post">
-			<table class="table table-bordered">
-				<tr>
-					<th>이름</th>
-					<td>
-						<input type="text" id="name" autofocus="autofocus">
-					</td>
-				</tr>
-				<tr>
-					<th>이메일</th>
-					<td>
-						<div class="input-group mb-3">
-					      <label for="email1" class="input-group-text bg-secondary-subtle border-secondary-subtle">Email</label>
-					      <input type="text" name="email1" id="email1" class="form-control" placeholder="Email을 입력하세요." required style="width:150px" />
-					      <div class="input-group-text border-white m-0 p-0">@</div>
-					      <select name="email2" class="form-select">
-					        <option value="naver.com" selected>naver.com</option>
-					        <option value="hanmail.net">hanmail.net</option>
-					        <option value="hotmail.com">hotmail.com</option>
-					        <option value="gmail.com">gmail.com</option>
-					        <option value="nate.com">nate.com</option>
-					        <option value="yahoo.com">yahoo.com</option>
-					      </select>
-					      <input type="button" value="인증번호받기" onclick="emailCertification()" id="certificationBtn" class="btn btn-success btn-sm" />
-					    </div>
-					    <div id="demoSpin" class="mb-3"></div>
-				    </td>
-				</tr>
-			</table>
+			<div class="input-group">
+				<label for="name" class="input-group-text bg-secondary-subtle border-secondary-subtle">이름</label>
+			<input type="text" id="name" autofocus="autofocus">
+			</div>		
+			<div class="input-group">
+		      <label for="email1" class="input-group-text bg-secondary-subtle border-secondary-subtle">Email</label>
+		      <input type="text" name="email1" id="email1" class="form-control" placeholder="Email을 입력하세요." required style="width:150px" />
+		      <div class="input-group-text border-white m-0 p-0">@</div>
+		      <select name="email2" class="form-select">
+		        <option value="naver.com" selected>naver.com</option>
+		        <option value="hanmail.net">hanmail.net</option>
+		        <option value="hotmail.com">hotmail.com</option>
+		        <option value="gmail.com">gmail.com</option>
+		        <option value="nate.com">nate.com</option>
+		        <option value="yahoo.com">yahoo.com</option>
+		      </select>
+		      <input type="button" value="인증번호받기" onclick="emailCertification()" id="certificationBtn" class="btn btn-success btn-sm" />
+		    </div>
+		    <div id="demoSpin" class="mb-3"></div>
+		    <div>
+				<input type="button" >
+			</div>
 		</form>
 	</div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
