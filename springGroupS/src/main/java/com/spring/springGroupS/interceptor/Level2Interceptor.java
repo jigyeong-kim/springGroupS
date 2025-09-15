@@ -13,8 +13,8 @@ public class Level2Interceptor extends HandlerInterceptorAdapter{
 		int level = session.getAttribute("sLevel")==null?99:(Integer)session.getAttribute("sLevel");
 		
 		if(level > 2) {
-			if(level == 99) request.getRequestDispatcher("message/loginError").forward(request, response);
-			else request.getRequestDispatcher("message/levelNo").forward(request, response);
+			if(level == 99) request.getRequestDispatcher("/message/loginError").forward(request, response);
+			else request.getRequestDispatcher("/message/levelNo").forward(request, response);
 			return false;
 		}
 		

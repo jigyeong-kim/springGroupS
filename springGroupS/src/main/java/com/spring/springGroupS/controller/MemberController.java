@@ -321,17 +321,19 @@ public class MemberController {
 		if(res != 0) {
 			session.invalidate();
 			return "1";
-		}else return "0";
+		}
+		else return "0";
 	}
-	
-	// 회원 멤버 리스트
+
+	// 회원 리스트보기
 	@GetMapping("/memberList")
 	public String memberListGet(Model model,
-			@RequestParam(name="pag", defaultValue="1", required=false) int pag,
-			@RequestParam(name="pageSize", defaultValue="10", required=false) int pageSize,
-			@RequestParam(name="level", defaultValue="99", required=false) int level
+			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "10", required = false) int pageSize,
+			@RequestParam(name="level", defaultValue = "99", required = false) int level
 		) {
 		List<MemberVO> vos = memberService.getMemberList(0, 100, level);
+		
 		model.addAttribute("pag", pag);
 		model.addAttribute("pageSize", pageSize);
 		
@@ -340,5 +342,6 @@ public class MemberController {
 		
 		return "member/memberList";
 	}
+	
 	
 }

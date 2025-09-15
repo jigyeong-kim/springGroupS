@@ -121,7 +121,7 @@ public class MessageController {
 		}
 		else if(msgFlag.equals("levelNo")) {
 			model.addAttribute("message", "등급을 확인해주세요");
-			model.addAttribute("url", "/member/memberJoin");
+			model.addAttribute("url", "/member/memberMain");
 		}
 		else if(msgFlag.equals("passWordChangeOK")) {
 			session.invalidate();
@@ -144,6 +144,15 @@ public class MessageController {
 			model.addAttribute("message", "회원정보수정 실패");
 			model.addAttribute("url", "/member/memberUpdate?mid="+mid);
 		}
+		else if(msgFlag.equals("boardInputOk")) {
+			model.addAttribute("message", "게시글 등록 완료");
+			model.addAttribute("url", "/board/boardList");
+		}
+		else if(msgFlag.equals("boardInputNo")) {
+			model.addAttribute("message", "게시글 등록 실패");
+			model.addAttribute("url", "/board/boardInput");
+		}
+		
 		
 		return "include/message";
 	}
