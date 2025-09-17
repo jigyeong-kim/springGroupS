@@ -19,5 +19,4 @@ public class BoardVO {
 	private int hour_diff;	// new.gif를 출력하기위한 변수(24시간 내에)
 	private int date_diff;	// 글쓴날짜를 오늘이후는 '날짜표시', 오늘 이전은 '시간/날짜-시간' 표시 하기위한 변후
 	private int replyCnt;		// 댓글의 갯수를 저장하기위한 변수
-	
 }

@@ -68,12 +68,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void setLastDateUpdate(String mid) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public int setMemberUpdateOk(MemberVO vo) {
 		return memberDAO.setMemberUpdateOk(vo);
 	}
@@ -85,7 +79,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberVO> getMemberList(int startIndexNo, int pageSize, int level) {
-		return memberDAO.getMemberList(startIndexNo, startIndexNo, level);
+		return memberDAO.getMemberList(startIndexNo, pageSize, level);
+	}
+
+	@Override
+	public void setLastDateUpdate(String mid) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getTotRecCnt() {
+		return memberDAO.getTotRecCnt();
 	}
 	
 }

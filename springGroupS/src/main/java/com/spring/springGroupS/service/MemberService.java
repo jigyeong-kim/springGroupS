@@ -32,6 +32,8 @@ public interface MemberService {
 
 	List<MemberVO> getMemberList(int startIndexNo, int pageSize, int level);
 
+	int getTotRecCnt();
+
 
 	
 
