@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
-
 <script>
-function userDeleteCheck() {
+  function userDeleteCheck() {
 	  let ans = confirm("회원 탈퇴하시겠습니까?");
 	  if(ans) {
 		  ans = confirm("탈퇴하시면 1개월간 같은 아이디로는 다시 가입하실수 없습니다.\n그래도 탈퇴 하시겠습니까?");
@@ -22,7 +21,7 @@ function userDeleteCheck() {
 			  });
 		  }
 	  }
-}
+  }
 </script>
 
 <!-- Navbar -->

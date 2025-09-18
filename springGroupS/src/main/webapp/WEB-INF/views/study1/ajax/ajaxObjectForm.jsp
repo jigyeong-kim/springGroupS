@@ -103,8 +103,8 @@
     		type : "post",
     		data : {dodo : dodo},
     		success:function(res) {
-    			console.log(res);
-    			$("#demo1").html(res);
+    			//console.log(res);
+    			//$("#demo1").html(res);
     			let str = '<option>도시선택</option>';
     			for(let i=0; i<res.city.length; i++) {
     				str += '<option>'+res.city[i]+'</option>';
@@ -128,15 +128,14 @@
     	$("#demo2").html(str);
     }
     
-    // 동기식
+    // 동기식 처리
     function midCheck1() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") alert("검색할 아이디를 입력하세요");
     	else myform4.submit();
     }
     
-    //비동기식
-    // vo검색
+    // vo검색처리
     function midCheck2() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
@@ -157,13 +156,13 @@
     			str += '성 명 : ' + vo.name + "<br/>";
     			str += '나 이 : ' + vo.age + "<br/>";
     			str += '주소  : ' + vo.address + "<br/>";
-    			$("#demo2").html(str);
+    			$("#demo1").html(str);
     		},
     		error : () => alert("전송오류")
     	});
     }
     
-    // 완전일치 
+    // vos검색(완전일치)
     function midCheck3() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
@@ -176,8 +175,8 @@
     		type : "post",
     		data : {mid : mid},
     		success:function(res) {
-    			console.log(res);
-    			$("#demo1").html(res);
+    			//console.log(res);
+    			//$("#demo1").html(res);
     			let str = '';
     			str += '<table class="table table-hover text-center">';
     			str += '<tr class="table-secondary">';
@@ -193,13 +192,13 @@
     				str += '</tr>';
     			}
     			str += '</table>';
-    			$("#demo3").html(str);
+    			$("#demo1").html(str);
     		},
     		error : () => alert("전송오류")
     	});
     }
     
-    //vos검색(부분일치 - like연산자 사용)
+    // vos검색(부분일치 - like연산자 사용)
     function midCheck4() {
     	let mid = document.getElementById("mid").value;
     	if(mid.trim() == "") {
@@ -212,8 +211,8 @@
     		type : "post",
     		data : {mid : mid},
     		success:function(res) {
-    			console.log(res);
-    			$("#demo1").html(res);
+    			//console.log(res);
+    			//$("#demo1").html(res);
     			let str = '<h4>vos로 전송된 자료 출력</h4>';
     			
     			if(res != '') {
@@ -233,9 +232,9 @@
 	    			str += '</table>';
     			}
     			else {
-    				str += "<b>찾고자 하는 자료가 없습니다.</b>"
+    				str += "<b>찾고자 하는 자료가 없습니다.</b>";
     			}
-    			$("#demo3").html(str);
+    			$("#demo1").html(str);
     		},
     		error : () => alert("전송오류")
     	});
@@ -252,6 +251,7 @@
   <form name="myform1">
     <h3>1.도시를 선택하세요(일반배열처리)</h3>
     <select name="dodo" id="dodo" onchange="dodoCheck()">
+      <option value="">선택</option>
       <option>서울</option>
       <option>경기</option>
       <option>충북</option>
@@ -267,6 +267,7 @@
   <form name="myform2">
     <h3>2.도시를 선택하세요(객체배열(ArrayList)처리)</h3>
     <select name="dodo" id="dodo2" onchange="dodoCheck2()">
+      <option value="">선택</option>
       <option>서울</option>
       <option>경기</option>
       <option>충북</option>
@@ -282,6 +283,7 @@
   <form name="myform3">
     <h3>3.도시를 선택하세요(객체배열(Map)처리)</h3>
     <select name="dodo" id="dodo3" onchange="dodoCheck3()">
+      <option value="">선택</option>
       <option>서울</option>
       <option>경기</option>
       <option>충북</option>
@@ -299,7 +301,7 @@
 	  <div class="input-group">
 		  <input type="text" name="mid" id="mid" value="hkd1234" class="form-control"/>
 		  <input type="button" value="검색1(일반-DB)" onclick="midCheck1()" class="btn btn-success"/>
-		  <input type="button" value="검색2(ajax-VO)" onclick="midCheck2()" class="btn btn-primary"/>
+		  <input type="button" value="검색2(ajax-vo)" onclick="midCheck2()" class="btn btn-primary"/>
 		  <input type="button" value="검색3(ajax-vos)" onclick="midCheck3()" class="btn btn-info"/>
 		  <input type="button" value="검색4(부분일치)" onclick="midCheck4()" class="btn btn-warning"/>
 	  </div>
@@ -307,7 +309,6 @@
   <hr/>
   <div id="demo1"></div>
   <div id="demo2"></div>
-  <div id="demo3"></div>
   <c:if test="${fn:length(vos) != 0}">
 	  <hr/>
 	  <table class="table table-hover text-center">

@@ -1,7 +1,7 @@
 show tables;
 
 create table member (
-	idx       int not null auto_increment,	/* 회원 고유번호 */
+  idx       int not null auto_increment,	/* 회원 고유번호 */
   mid       varchar(30) not null,					/* 회원 아이디(중복불허) */
   pwd       varchar(100) not null,				/* 회원 비번(sha256암호화) */
   nickName  varchar(20) not null,					/* 회원별명(중복불허/수정가능) - 무조건 공개 */
@@ -27,6 +27,8 @@ create table member (
   primary key (idx),
   unique(mid)
 );
+desc member;
+drop table member;
 
 insert into member (mid,pwd,nickName,name,email) values ('1','1','n1','a1','e1');
 insert into member (mid,pwd,nickName,name,email) values ('2','1','n2','a2','e2');
@@ -49,6 +51,4 @@ insert into member (mid,pwd,nickName,name,email) values ('18','1','n18','a18','e
 insert into member (mid,pwd,nickName,name,email) values ('19','1','n19','a19','e19');
 insert into member (mid,pwd,nickName,name,email) values ('20','1','n20','a20','e20');
 
-desc member;
 select * from member;
-drop table member;

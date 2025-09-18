@@ -83,14 +83,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void setLastDateUpdate(String mid) {
-		// TODO Auto-generated method stub
-		
+	public int getTotRecCnt() {
+		return memberDAO.getTotRecCnt();
 	}
 
 	@Override
-	public int getTotRecCnt() {
-		return memberDAO.getTotRecCnt();
+	public List<MemberVO> getMemberLevelCount(int level) {
+		return memberDAO.getMemberLevelCount(level);
 	}
 	
 }

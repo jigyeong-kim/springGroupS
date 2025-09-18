@@ -12,19 +12,19 @@ public interface MemberService {
 
 	int setMemberJoin(MemberVO vo);
 
-	void setLastDateUpdate(String mid);
+	//void setLastDateUpdate(String mid);
 
 	int setMemberPwdChange(String mid, String pwd);
-
-	void setMemberLevelUp(String mid);
 
 	void setMemberTodayCntClear(String mid);
 
 	void setMemberInforUpdate(String mid, int point);
 
+	List<MemberVO> getmemberIdSearch(String email);
+
 	void setMemberInforUpdateMinus(String mid);
 
-	List<MemberVO> getmemberIdSearch(String email);
+	void setMemberLevelUp(String mid);
 
 	int setMemberUpdateOk(MemberVO vo);
 
@@ -34,8 +34,6 @@ public interface MemberService {
 
 	int getTotRecCnt();
 
-
-	
-
+	List<MemberVO> getMemberLevelCount(int level);
 
 }

@@ -19,10 +19,11 @@ public class UserDAOImpl implements UserDAO {
 		List<UserVO> vos = sqlSession.selectList("userNS.getUserList");
 		return vos;
 	}
-	
+
 	@Override
 	public UserVO getUserSearch(String mid) {
 		UserVO vo = sqlSession.selectOne("userNS.getUserSearch", mid);
 		return vo;
 	}
+	
 }

@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,7 +55,7 @@ public class HomeController {
 	}
 	
 	@PostMapping("/imageUpload")
-	public void imageUploadPost(MultipartFile upload, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void imageUploadGet(MultipartFile upload, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
@@ -66,7 +65,14 @@ public class HomeController {
 		// 확장자 제한처리(이미지파일(jpg,gif,png) + 동영상파일(mp4))
 		String regExt = "(jpg|jpeg|gif|png|mp4)";
 		String ext = oFileName.substring(oFileName.lastIndexOf(".")+1);
-		if(!ext.matches(regExt)) return;
+		if(!ext.matches(regExt)) {
+			System.out.println("잘못된 파일 업로드중...");
+//			PrintWriter out = response.getWriter();		// 사용자 메세지 처리 안됨...ㅜㅜ...
+//			out.println("<script>");
+//			out.println("alert('업로드할 화일형식을 확인하세요');");
+//			out.println("</script>");
+			return;
+		}
 		
 		// 파일명 중복방지를 위해 날짜구분기호로 처리
 		Date date = new Date();
@@ -79,11 +85,9 @@ public class HomeController {
 		
 		PrintWriter out = response.getWriter();
 		String fileUrl = request.getContextPath()+"/data/ckeditor/"+oFileName;
-		
-		out.println("{\"originalFilename\":\""+ oFileName +"\",\"uploaded\":1,\"url\":\""+ fileUrl +"\"}");
+		out.println("{\"originalFilename\":\""+oFileName+"\",\"uploaded\":1,\"url\":\""+fileUrl+"\"}");
 		
 		fos.close();
-		
 	}
 	
 }

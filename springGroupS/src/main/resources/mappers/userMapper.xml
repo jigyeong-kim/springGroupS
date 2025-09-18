@@ -6,4 +6,8 @@
     select * from user order by idx desc;
   </select>
 
+	<select id="getUserSearch" resultType="userVO">
+		select * from user where mid = #{mid};
+	</select>
+
 </mapper>

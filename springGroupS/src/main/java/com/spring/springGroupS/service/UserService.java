@@ -7,7 +7,7 @@ import com.spring.springGroupS.vo.UserVO;
 public interface UserService {
 
 	List<UserVO> getUserList();
-	
+
 	UserVO getUserSearch(String mid);
 
 

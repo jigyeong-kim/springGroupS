@@ -3,24 +3,30 @@
 <mapper namespace="com.spring.springGroupS.dao.GuestDAO">
 
 	<select id="getGuestList" resultType="com.spring.springGroupS.vo.GuestVO">
-		select * from guest order by idx desc limit #{startIndexNo}, #{pageSize};
+		select * from guest order by idx desc limit #{startIndexNo},#{pageSize};
 	</select>
 	
 	<select id="getTotRecCnt" resultType="int">
-		select count(*) from guest;
+	  select count(*) from guest;
+	</select>
+	
+	<select id="getMemberSearch" resultType="int">
+	  select count(*) from guest where name=#{mid} or name=#{nickName} or name=#{name};
 	</select>
 
-	<select id="getMemberSearch" resultType="int">
-		select count(*) from guest where name=#{mid} or name=#{nickName} or name=#{name};
-	</select>
-	
-	<insert id="setGuestInput">
-		insert into guest values (default,#{vo.name},#{vo.content},#{vo.email},#{vo.homePage}, default, #{vo.hostIp});
-	</insert>
-	
-	<delete id="setGuestDelete">
-		delete from guest where idx = #{idx};
-	</delete>
-	
-	
+
+
+
+  <insert id="setGuestInput">
+    insert into guest values (default,#{vo.name},#{vo.content},#{vo.email},#{vo.homePage},default,#{vo.hostIp});
+  </insert>
+  
+  
+  
+  
+  
+  <delete id="setGuestDelete">
+    delete from guest where idx = #{idx};
+  </delete>
+
 </mapper>

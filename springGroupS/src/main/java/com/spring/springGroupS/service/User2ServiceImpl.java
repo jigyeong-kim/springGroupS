@@ -10,6 +10,7 @@ import com.spring.springGroupS.vo.UserVO;
 
 @Service
 public class User2ServiceImpl implements User2Service {
+
 	@Autowired
 	User2DAO user2DAO;
 
@@ -40,8 +41,8 @@ public class User2ServiceImpl implements User2Service {
 
 	@Override
 	public int setUserUpdate(UserVO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return user2DAO.setUserUpdate(vo);
 	}
 
+	
 }

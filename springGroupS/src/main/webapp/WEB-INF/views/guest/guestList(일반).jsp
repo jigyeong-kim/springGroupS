@@ -58,7 +58,7 @@
     <table class="table table-borderless m-0 p-0">
 	    <tr>
 	      <%-- <td>번호 : ${vo.idx} --%>
-	      <td>번호 : ${totRecCnt - st.index}
+	      <td>번호 : ${fn:length(vos) - st.index}
 	        <c:if test="${sAdmin == 'adminOK'}"><a href="javascript:guestDelete(${vo.idx})" class="btn btn-danger btn-sm">삭제</a></c:if>
 	        <c:if test="${sAdmin != 'adminOk' && sNickName == vo.name}">
 	          <a href="#" class="btn btn-warning btn-sm">수정</a>

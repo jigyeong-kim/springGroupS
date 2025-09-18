@@ -48,7 +48,7 @@
     	<th>올린날짜</th>
     	<th>조회수(♥)</th>
     </tr>
-     <c:set var="curScrStartNo" value="${pageVO.curScrStartNo}"/>
+    <c:set var="curScrStartNo" value="${pageVO.curScrStartNo}"/>
     <c:forEach var="vo" items="${vos}" varStatus="st">
       <tr>
         <td>${curScrStartNo}</td>
@@ -62,9 +62,17 @@
 		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
             </c:if>
           </c:if>
-          <c:if test="${vo.openSw != 'NO'}">
-	          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
-	          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+          <c:if test="${vo.complaint != 'HI'}">
+	          <c:if test="${vo.openSw != 'NO'}">
+		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">${vo.title}</a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
+		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+	          </c:if>
+          </c:if>
+          <c:if test="${vo.complaint == 'HI'}">
+	          <c:if test="${vo.openSw != 'NO'}">
+		          <span>${vo.title} - <font color="red">현재글은 신고중</font></span> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary" style="font-size:10px">${vo.replyCnt}</span></c:if>
+		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+	          </c:if>
           </c:if>
         </td>
         <td>${vo.nickName}</td>
@@ -93,7 +101,7 @@
 <br/>
 <!-- 검색기 시작 -->
   <div class="text-center">
-    <form name="searchForm" method="post" action="boardSearchList">
+    <form name="searchForm" method="get" action="boardSearchList">
       <b>검색  : </b>
       <select name="search" id="search">
         <option value="title" selected>글제목</option>

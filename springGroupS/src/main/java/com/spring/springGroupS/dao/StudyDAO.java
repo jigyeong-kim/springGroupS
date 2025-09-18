@@ -15,7 +15,7 @@ public interface StudyDAO {
 	UserVO getUserMidSearch(@Param("mid") String mid);
 
 	ArrayList<UserVO> getUserListSearch(@Param("mid") String mid);
-	
+
 	List<MemberVO> getMemberList();
-	
+
 }

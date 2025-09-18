@@ -8,8 +8,8 @@ public class PageVO {
 	private int pageSize;
 	private int totRecCnt;
 	private int totPage;
-	private int curScrStartNo;
 	private int startIndexNo;
+	private int curScrStartNo;
 	private int blockSize;
 	private int curBlock;
 	private int lastBlock;
@@ -20,4 +20,7 @@ public class PageVO {
 	private String searchString;  // '검색어...'
 	private String searchStr; // '글제목/글쓴이/글내용'
 	private String boardFlag;	// 검색기에서 글내용보기 호출시 사용하는 변수
+	
+	private int level;	// 회원 등급(초기값:99 - 비회원)
+	
 }

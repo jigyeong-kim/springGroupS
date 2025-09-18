@@ -9,9 +9,7 @@
   <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <title>test35.jsp</title>
   <script>
-  	'use strict';
-  	
-  	if('${message}' != '') alert('${message}');
+    'use strict';
   </script>
 </head>
 <body>

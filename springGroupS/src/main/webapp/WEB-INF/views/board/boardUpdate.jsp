@@ -6,8 +6,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <script src="${ctp}/ckeditor/ckeditor.js"></script>
+  <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <title>boardUpdate.jsp</title>
 </head>
 <body>
@@ -28,15 +28,14 @@
       </tr>
       <tr>
         <th>글내용</th>
-        <td>
-        	<textarea rows="6" name="content" id="CKEDITOR" required class="form-control">${vo.content}</textarea>
-	        <script>
-	        	CKEDITOR.replace("content", {
-	        		height:400,
-	        		filebrowserUploadUrl:"${ctp}/imageUpload",
-	        		uploadUrl:"${ctp}/imageUpload"
-	        	});
-	        </script>
+        <td><textarea rows="6" name="content" id="CKEDITOR" required class="form-control">${vo.content}</textarea>
+          <script>
+            CKEDITOR.replace("content", {
+            	height:480,
+            	filebrowserUploadUrl:"${ctp}/imageUpload",
+            	uploadUrl:"${ctp}/imageUpload"
+            });
+          </script>
         </td>
       </tr>
       <tr>

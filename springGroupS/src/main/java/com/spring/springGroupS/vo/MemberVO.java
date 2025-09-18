@@ -29,4 +29,5 @@ public class MemberVO {
 	private String lastDate;
 	
 	private int deleteDiff;
+	
 }

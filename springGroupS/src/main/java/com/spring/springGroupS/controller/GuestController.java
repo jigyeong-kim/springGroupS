@@ -92,17 +92,12 @@ public class GuestController {
 		return "redirect:/message/adminOut";
 	}
 	
-	// 방명록 게시글 삭제
+	// 방명록 게시글 삭제처리
 	@GetMapping("/guestDelete")
 	public String guestDeleteGet(int idx) {
 		int res = guestService.setGuestDelete(idx);
 		
 		if(res != 0) return "redirect:/message/guestDeleteOk";
 		else return "redirect:/message/guestDeleteNo";
-	}
-	
-	@GetMapping("/member")
-	public String memberGet() {
-		return "member/member";
 	}
 }

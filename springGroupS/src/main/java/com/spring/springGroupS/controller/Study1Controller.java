@@ -399,7 +399,8 @@ public class Study1Controller {
 		for(int i=1; i<=3; i++) {
 			String str = "vo" + i;
 			vo = context.getBean(str, SungjukVO.class);
-			vo = study1Service.getSungjukCalc(vo);
+			//vo = study1Service.getSungjukCalc(vo);
+			study1Service.getSungjukCalc(vo);
 			vos.add(vo);
 		}
 		
@@ -440,11 +441,12 @@ public class Study1Controller {
 		List<BmiVO> vos = new ArrayList<BmiVO>();
 		
 		BmiVO vo = null;
-		for(int i=1; i<=5; i++) {
+		for(int i=1; i<=50; i++) {
 			String str = "person" + i;
 			vo = context.getBean(str, BmiVO.class);
 			if(vo.getName().equals("")) break;
-			vo = study1Service.getBmiCalc(vo);
+			// vo = study1Service.getBmiCalc(vo);
+			study1Service.getBmiCalc(vo);
 			vos.add(vo);
 		}
 		
@@ -455,219 +457,217 @@ public class Study1Controller {
 	}
 	
 	// restApi 폼보기
-		@GetMapping("/restApi/restApiForm")
-		public String restApiFormGet() {
-			return "study1/restApi/restApiForm";
-		}
+	@GetMapping("/restApi/restApiForm")
+	public String restApiFormGet() {
+		return "study1/restApi/restApiForm";
+	}
+	
+	// REST API를 통한 일반 메세지 처리1(X)
+	@GetMapping("/restApi/test1/{message}")
+	public String restApiTest1Get(@PathVariable String message) {
+		System.out.println("message : " + message);
+		return "message : " + message;
+	}
+	
+	// REST API를 통한 일반 메세지 처리2(O)
+	@ResponseBody
+	@GetMapping("/restApi/test2/{message}")
+	public String restApiTest2Get(@PathVariable String message) {
+		System.out.println("message : " + message);
+		return "message : " + message;
+	}
+	
+	// AJax 폼보기
+	@GetMapping("/ajax/ajaxForm")
+	public String ajaxFormGet() {
+		return "study1/ajax/ajaxForm";
+	}
+	
+	// 일반 값 처리
+	@ResponseBody
+	@GetMapping("/ajax/ajaxTest1")
+	public String ajaxTest1Get(int item) {
+		return "item = " + item;
+	}
+	
+	// AJax 숫자값 처리
+	@ResponseBody
+	@PostMapping("/ajax/ajaxTest2")
+	public int ajaxTest2Get(int item) {
+		return item;
+	}
+	
+	// AJax 문자값 처리
+	@ResponseBody
+	@PostMapping("/ajax/ajaxTest3")
+	public String ajaxTest3Post(String item) {
+		return "item = " + item;
+	}
+	
+	// AJax 객체 전송 폼보기
+	@GetMapping("/ajax/ajaxObjectForm")
+	public String ajaxObjectFormGet() {
+		return "study1/ajax/ajaxObjectForm";
+	}
+	
+	// ajax처리결과를 배열(String배열)로 전송...
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject1")
+	public String[] ajaxObject1Post(String dodo) {
+//		String[] strArray = new String[100];
+//		strArray = studyService.getCityStringArray(dodo);
+//		return strArray;
+		return studyService.getCityStringArray(dodo);
+	}
+	
+	// ajax처리결과를 객체배열(ArrayList<String>)로 전송...
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject2")
+	public ArrayList<String> ajaxObject2Post(String dodo) {
+		return studyService.getCityArrayList(dodo);
+	}
+	
+	// ajax처리결과를 객체배열(Map<Object, Object>)로 전송...
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject3")
+	public Map<Object, Object> ajaxObject3Post(String dodo) {
+		ArrayList<String> vos = studyService.getCityArrayList(dodo);
 		
-		// REST API를 통한 일반 메세지 처리1(X)
-		@GetMapping("/restApi/test1/{message}")
-		public String restApiTest1Get(@PathVariable String message) {
-			System.out.println("message : " + message);
-			return "message : " + message;
-		}
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		map.put("city", vos);
+		return map;
+	}
+	
+	// 객체배열(arrayList)로 전송...
+	@PostMapping("/ajax/ajaxObject4")
+	public String ajaxObject4Post(Model model, String mid) {
+		ArrayList<UserVO> vos = studyService.getUserList(mid);
+		model.addAttribute("vos", vos);
 		
-		// REST API를 통한 일반 메세지 처리2(O)
-		@ResponseBody
-		@GetMapping("/restApi/test2/{message}")
-		public String restApiTest2Get(@PathVariable String message) {
-			System.out.println("message : " + message);
-			return "message : " + message;
-		}
+		return "study1/ajax/ajaxObjectForm";
+	}
+	
+	// vo객체로 전송...
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject5")
+	public UserVO ajaxObject5Post(String mid) {
+		return studyService.getUserMidSearch(mid);
+	}
+	
+	// vos객체로 전송...(완전일치)
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject6")
+	public ArrayList<UserVO> ajaxObject6Post(String mid) {
+		return studyService.getUserList(mid);
+	}
+	
+	// vos객체로 전송...(부분일치)
+	@ResponseBody
+	@PostMapping("/ajax/ajaxObject7")
+	public ArrayList<UserVO> ajaxObject7Post(String mid) {
+		return studyService.getUserListSearch(mid);
+	}
+	
+	// 암호화 연습 폼
+	@GetMapping("/password/passwordForm")
+	public String passwordFormGet() {
+		return "study1/password/passwordForm";
+	}
+	
+	// sha256암호화(ajax처리)
+	@ResponseBody
+	@PostMapping(value="/password/sha256", produces="application/text; charset=utf8")
+	public String sha256Post(String pwd) {
+		String salt = UUID.randomUUID().toString().substring(0, 8);
+		SecurityUtil security = new SecurityUtil();
+		String encPwd = security.encryptSHA256(salt + pwd);
+		pwd = "salt : " + salt + " / 암호화된 비밀번호 : " + encPwd;
+		return pwd;
+	}
+	
+	// aria암호화(ajax처리)
+	@ResponseBody
+	@PostMapping(value="/password/aria", produces="application/text; charset=utf8")
+	public String ariaPost(String pwd) throws InvalidKeyException, UnsupportedEncodingException {
+		String salt = UUID.randomUUID().toString().substring(0, 8);
 		
-		// AJax 폼보기
-		@GetMapping("/ajax/ajaxForm")
-		public String ajaxFormGet() {
-			return "study1/ajax/ajaxForm";
-		}
+		String encPwd = ARIAUtil.ariaEncrypt(salt + pwd);
+		String decPwd = ARIAUtil.ariaDecrypt(encPwd);
 		
-		// 일반 값 처리
-		@ResponseBody
-		@GetMapping("/ajax/ajaxTest1")
-		public String ajaxTest1Get(int item) {
-			return "item = " + item;
-		}
+		pwd = "salt : " + salt + " / 암호화된 비밀번호 : " + encPwd + " / 복호화비번 : " + decPwd.substring(8);
+		return pwd;
+	}
+	
+	// BCryptPasswordEncoder암호화(ajax처리)
+	@ResponseBody
+	@PostMapping(value="/password/bCryptPassword", produces="application/text; charset=utf8")
+	public String bCryptPasswordPost(String pwd) throws InvalidKeyException, UnsupportedEncodingException {
+		String encPwd = passwordEncoder.encode(pwd);
 		
-		// AJax 숫자값 처리
-		@ResponseBody
-		@PostMapping("/ajax/ajaxTest2")
-		public int ajaxTest2Get(int item) {
-			return item;
-		}
+		pwd = "암호화된 비밀번호 : " + encPwd;
+		return pwd;
+	}
+	
+	// 메일 작성폼 보기
+	@GetMapping("/mail/mailForm")
+	public String mailFormGet(Model model) {
+		List<MemberVO> memberVos = studyService.getMemberList();
+		model.addAttribute("memberVos", memberVos);
+		model.addAttribute("memberCnt", memberVos.size());
 		
-		// AJax 문자값 처리
-		@ResponseBody
-		@PostMapping("/ajax/ajaxTest3")
-		public String ajaxTest3Post(String item) {
-			return "item = " + item;
-		}
+		return "study1/mail/mailForm";
+	}
+	
+	// 메일 보내기
+	@PostMapping("/mail/mailForm")
+	public String mailFormPost(MailVO vo, HttpServletRequest request) throws MessagingException {
+		String toMail = vo.getToMail();
+		String title = vo.getTitle();
+		String content = vo.getContent();
 		
-		// AJax 객체 전송 폼보기
-		@GetMapping("/ajax/ajaxObjectForm")
-		public String ajaxObjectFormGet() {
-			return "study1/ajax/ajaxObjectForm";
-		}
+		// 메일 전송을 위한 객체 : MimeMessage(), MimeMessageHelper()
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 		
-		// ajax처리결과를 배열(String배열)로 전송...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject1")
-		public String[] ajaxObject1Post(String dodo) {
-//			String[] strArray = new String[100];
-//			strArray = studyService.getCityStringArray(dodo);
-//			return strArray;
-			return studyService.getCityStringArray(dodo);
-		}
+		// 메세지보관함에 저장되는 'content'변수안에 발신자의 필요한 정보를 추가로 담아준다.
+		content = content.replace("\n", "<br>");
+		content += "<br><hr><h3>SpringGroup에서 보냅니다.</h3><hr><br>";
+		content += "<p><img src=\"cid:main.jpg\" width='500px'></p>";
+		content += "<p>방문하기 : <a href='http://49.142.157.251:9090/cjgreen'>springGroup</a></p>";
+		content += "<hr>";
+		messageHelper.setTo(toMail);
+		messageHelper.setSubject(title);
+		messageHelper.setText(content, true);
 		
-		// ajax처리결과를 객체배열(ArrayList<String>)로 전송...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject2")
-		public ArrayList<String> ajaxObject2Post(String dodo) {
-			return studyService.getCityArrayList(dodo);
-		}
+		// FileSystemResource file = new FileSystemResource("D:\\springGroup\\springframework\\works\\springGroupS\\src\\main\\webapp\\resources\\images\\main.jpg");
+		FileSystemResource file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/main.jpg"));
+		messageHelper.addInline("main.jpg", file);
 		
-		// ajax처리결과를 객체배열(Map<Object, Object>)로 전송...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject3")
-		public Map<Object, Object> ajaxObject3Post(String dodo) {
-			ArrayList<String> vos = studyService.getCityArrayList(dodo);
-			
-			Map<Object, Object> map = new HashMap<Object, Object>();
-			map.put("city", vos);
-			return map;
-		}
+		// 첨부파일 보내기
+		file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/2.jpg"));
+		messageHelper.addAttachment("2.jpg", file);
+		file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/3.jpg"));
+		messageHelper.addAttachment("3.jpg", file);
 		
-		// 객체배열(arrayList)로 전송...
-		@PostMapping("/ajax/ajaxObject4")
-		public String ajaxObject4Post(Model model, String mid) {
-			ArrayList<UserVO> vos = studyService.getUserList(mid);
-			model.addAttribute("vos", vos);
-			
-			return "study1/ajax/ajaxObjectForm";
-		}
+		// 메일 전송하기
+		mailSender.send(message);
 		
-		// vo객체로 전송...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject5")
-		public UserVO ajaxObject5Post(String mid) {
-			return studyService.getUserMidSearch(mid);
-		}
+		return "redirect:/message/mailSendOk";
+	}
+	
+	// 파일 업로드폼 보기
+	@GetMapping("/fileUpload/fileUploadForm")
+	public String fileUploadFormGet() {
+		return "study1/fileUpload/fileUploadForm";
+	}
+	
+	// 1개 파일 업로드 처리
+	@PostMapping("/fileUpload/fileUploadForm")
+	public String fileUploadFormPost(MultipartFile fName, String mid) {
+		int res = studyService.setFileUpload(fName, mid);
 		
-		// vo객체로 전송(완전일치)...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject6")
-		public ArrayList<UserVO> ajaxObject6Post(String mid) {
-			return studyService.getUserList(mid);
-		}
-		
-		// vo객체로 전송(부분일치)...
-		@ResponseBody
-		@PostMapping("/ajax/ajaxObject7")
-		public ArrayList<UserVO> ajaxObject7Post(String mid) {
-			return studyService.getUserListSearch(mid);
-		}
-		
-		// 암호화 엽습 폼
-		@GetMapping("/password/passwordForm")
-		public String passwordFormGet() {
-			return "study1/password/passwordForm";
-		}
-
-		// sha256암호화 (ajax처리)
-		@ResponseBody
-		@PostMapping(value="/password/sha256", produces="application/text; charset=utf8")
-		public String sha256Post(String pwd) {
-			String salt = UUID.randomUUID().toString().substring(0, 8);
-			SecurityUtil security = new SecurityUtil();
-			String encPwd = security.encryptSHA256(salt + pwd);
-			pwd = "salt : " + salt + " / 암호화된 비밀번호 : " + encPwd; 
-			return pwd;
-		}
-		
-		// aria암호화 (ajax처리)
-		@ResponseBody
-		@PostMapping(value="/password/aria", produces="application/text; charset=utf8")
-		public String ariaPost(String pwd) throws InvalidKeyException, UnsupportedEncodingException {
-			String salt = UUID.randomUUID().toString().substring(0, 8);
-
-			String encPwd = ARIAUtil.ariaEncrypt(salt + pwd);
-			String decPwd = ARIAUtil.ariaDecrypt(encPwd);
-			
-			pwd = "salt : " + salt + " / 암호화된 비밀번호 : " + encPwd + " / 복호화된 비밀번호 : " + decPwd.substring(8); 
-			return pwd;
-		}
-
-		// BCryptPasswordEncoder암호화 (ajax처리)
-		@ResponseBody
-		@PostMapping(value="/password/bCryptPassword", produces="application/text; charset=utf8")
-		public String bCryptPasswordPost(String pwd) throws InvalidKeyException, UnsupportedEncodingException {
-			String encPwd = passwordEncoder.encode(pwd);
-			
-			pwd = "암호화된 비밀번호 : " + encPwd; 
-			return pwd;
-		}
-
-		// 메일 작성폼 보기
-		@GetMapping("/mail/mailForm")
-		public String mailFormGet(Model model) {
-			List<MemberVO> memberVos = studyService.getMemberList();
-			model.addAttribute("memberVos", memberVos);
-			model.addAttribute("memberCnt", memberVos.size());
-			
-			return "study1/mail/mailForm";
-		}
-		
-		// 메일 보내기
-		@PostMapping("/mail/mailForm")
-		public String mailFormPost(MailVO vo, HttpServletRequest request) throws MessagingException{
-			String toMail = vo.getToMail();
-			String title = vo.getTitle();
-			String content = vo.getContent();
-			
-			// 메일 전송을 위한 객체 : MimeMessage(), MimeMessageHelper()
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			
-			// 메세지보관함에 저장되는 content변수안에 발신자의 필요한 정보를 추가로 담아준다
-			content = content.replace("\n", "<br>");
-			content += "<br><h3>SpringGroup에서 보냅니다.</h3><br>";
-			content += "<p><img src=\"cid:main.jpg\" width=''></p>";
-			content += "<p><a href='http://49.142.157.251:9090/cjgreen'>방문하기</a></p>";
-			content += "";
-			content += "";
-			content += "";
-			content += "";
-			
-			messageHelper.setTo(toMail);
-			messageHelper.setSubject(title);
-			messageHelper.setText(content, true);
-			
-			// FileSystemResource file = new FileSystemResource("C:\\Users\\green\\git\\repository\\springGroupS\\src\\main\\webapp\\resources\\images\\main.jpg");
-			FileSystemResource file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/main.jpg"));
-			messageHelper.addInline("main.jpg", file);
-			
-			// 첨부파일 보내기
-			file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/1.jpg"));
-			messageHelper.addAttachment("1.jpg", file);
-			
-			// 메일 전송하기
-			mailSender.send(message);
-			
-			return "redirect:/message/mailSandOk";
-		}
-				
-		// 파일 업로드폼 보기
-		@GetMapping("/fileUpload/fileUploadForm")
-		public String fileUploadFormGet()  {
- 
-			return "study1/fileUpload/fileUploadForm";
-		}
-		
-		// 1개 파일 업로드 처리
-		@PostMapping("/fileUpload/fileUploadForm")
-		public String fileUploadFormPost(MultipartFile fName, String mid)  {
-			int res = studyService.setFileUpload(fName, mid);
-			
-			if(res != 0) return "redirect:/message/fileUploadOk";
-			else return "redirect:/message/fileUploadNo";
-		}
+		if(res != 0) return "redirect:/message/fileUploadOk";
+		else return "redirect:/message/fileUploadNo";
+	}
+	
 }

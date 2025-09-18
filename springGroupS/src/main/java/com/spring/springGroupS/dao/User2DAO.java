@@ -17,7 +17,7 @@ public interface User2DAO {
 	int setUserDelete(@Param("idx") int idx);
 
 	UserVO getUserIdxSearch(@Param("idx") int idx);
-	
-	int setUserUpdate(UserVO vo);
+
+	int setUserUpdate(@Param("vo") UserVO vo);
 
 }

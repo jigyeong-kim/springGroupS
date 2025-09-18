@@ -46,7 +46,7 @@ public class ProjectProvide {
 		// 메세지보관함에 저장되는 'content'변수안에 발신자의 필요한 정보를 추가로 담아준다.
 		content = content.replace("\n", "<br>");
 		content += "<br><hr><h3>SpringGroup에서 보냅니다.</h3><hr>";
-		content += "<font color='red'><b>"+mailFlag+"</b></font><hr>";
+		content += "<font size='5' color='red'><b>"+mailFlag+"</b></font><hr>";
 		content += "<p><img src=\"cid:main.jpg\" width='500px'></p>";
 		content += "<p>방문하기 : <a href='http://49.142.157.251:9090/cjgreen'>springGroup</a></p>";
 		content += "<hr>";
@@ -72,14 +72,13 @@ public class ProjectProvide {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 		return sFileName;
 	}
 
+	// 지정된경로에 파일 저정하기
 	private void writeFile(MultipartFile fName, String sFileName, String part) throws IOException {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/fileUpload/");
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+part+"/");
 		
 		FileOutputStream fos = new FileOutputStream(realPath + sFileName);
 		
@@ -90,13 +89,12 @@ public class ProjectProvide {
 		fos.close();
 	}
 
+	// 지정된 경로의 파일 삭제하기
 	public void fileDelete(String fileName, String part) {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/fileUpload/");
-		
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/"+part+"/");
 		File file = new File(realPath + fileName);
 		if(file.exists()) file.delete();
 	}
-	
 	
 }

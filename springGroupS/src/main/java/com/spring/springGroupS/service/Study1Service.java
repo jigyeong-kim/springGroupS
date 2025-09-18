@@ -63,7 +63,8 @@ public class Study1Service {
 	}
 
 	// 성적 계산하기
-	public SungjukVO getSungjukCalc(SungjukVO vo) {
+	//public SungjukVO getSungjukCalc(SungjukVO vo) {
+	public void getSungjukCalc(SungjukVO vo) {
 		int tot = vo.getKor() + vo.getEng() + vo.getMat();
 		double avg = tot / 3.0;
 		String grade = "";
@@ -78,7 +79,7 @@ public class Study1Service {
 		vo.setGrade(grade);
 		//System.out.println("vo(서비스) : " + vo);
 		
-		return vo;
+		//return vo;
 	}
 
 	// 비만도 판별하기
@@ -92,10 +93,11 @@ public class Study1Service {
    
    데이터의 주입은 xml을 통해서 처리한다.(입력값 : 비만지수값, 개인별 성명/키/몸무게)
   */
-	public BmiVO getBmiCalc(BmiVO vo) {
+	//public BmiVO getBmiCalc(BmiVO vo) {
+	public void getBmiCalc(BmiVO vo) {
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("xml/bmi.xml");
-		//BmiVO bVo = (BmiVO) ctx.getBean("bmi");
-		BmiVO bVo = ctx.getBean("bmi", BmiVO.class);
+		BmiVO bVo = (BmiVO) ctx.getBean("bmi");
+		//BmiVO bVo = ctx.getBean("bmi", BmiVO.class);
 		
 		double dblHeight = vo.getHeight() / 100.0;
 		double bmi = vo.getWeight() / (dblHeight * dblHeight);
@@ -126,7 +128,7 @@ public class Study1Service {
 		vo.setBigo(bigo);
 		
 		ctx.close();
-		return vo;
+		//return vo;
 	}
 	
 }

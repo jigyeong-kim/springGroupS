@@ -8,6 +8,7 @@ public class BmiVO {
 	private String name;
 	private int height;
 	private int weight;
+	
 	private double bmi;
 	private String result;
 	private String bigo;
