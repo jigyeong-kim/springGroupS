@@ -90,7 +90,7 @@ public class AdminController {
 	public String complaintListGet(Model model, PageVO pageVO) {
 		pageVO.setSection("complaint");
 		pageVO = pagination.pagination(pageVO);
-		List<ComplaintVO> vos = adminService.getComplaintList(pageVO.getStartIndexNo(),pageVO.getPageSize());
+		List<ComplaintVO> vos = adminService.getComplaintList(pageVO.getStartIndexNo(),pageVO.getPageSize(), pageVO.getPart());
 		model.addAttribute("vos", vos);
 		return "admin/complaint/complaintList";
 	}
@@ -102,7 +102,7 @@ public class AdminController {
 		model.addAttribute("vo", vo);
 		return "admin/complaint/complaintContent";
 	}
-		
+	
 	// 신고내역자료 '취소(S)/감추기(H)/삭제(D)'
 	@ResponseBody
 	@PostMapping("/complaint/complaintProcess")
@@ -119,10 +119,9 @@ public class AdminController {
 			}
 			else {
 				res =adminService.setComplaintProcess(vo.getPartIdx(), "NO");
-				vo.setComplaintSw("처리중(S)");
+				vo.setComplaintSw("처리완료(S)");
 			}
 		}
-		System.out.println("idx: " + vo.getIdx() + ", sw : " + vo.getComplaintSw());
 		if(res != 0) adminService.setComplaintProcessOk(vo.getIdx(), vo.getComplaintSw());
 		
 		return res;

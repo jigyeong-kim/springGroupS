@@ -42,8 +42,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<ComplaintVO> getComplaintList(int startIndexNo, int pageSize) {
-		return adminDAO.getComplaintList(startIndexNo, pageSize);
+	public List<ComplaintVO> getComplaintList(int startIndexNo, int pageSize, String part) {
+		return adminDAO.getComplaintList(startIndexNo, pageSize, part);
 	}
 
 	@Override
@@ -66,5 +66,9 @@ public class AdminServiceImpl implements AdminService {
 		return adminDAO.setComplaintProcessOk(idx, complaintSw);
 	}
 
+	@Override
+	public int getComplaintTotRecCnt(String part) {
+		return adminDAO.getComplaintTotRecCnt(part);
+	}
 	
 }
