@@ -2,11 +2,10 @@ package com.spring.springGroupS.dao;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.ibatis.annotations.Param;
 
 import com.spring.springGroupS.vo.PdsVO;
+import com.spring.springGroupS.vo.ReviewVO;
 
 public interface PdsDAO {
 
@@ -21,5 +20,7 @@ public interface PdsDAO {
 	void setPdsDownNumCheck(@Param("idx") int idx);
 
 	int setPdsDeleteCheck(@Param("idx") int idx);
+
+	List<ReviewVO> getReviewList(@Param("idx") int idx, @Param("part") String part);
 
 }

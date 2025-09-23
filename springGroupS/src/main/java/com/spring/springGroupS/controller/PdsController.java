@@ -2,14 +2,12 @@ package com.spring.springGroupS.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.springGroupS.common.Pagination;
-import com.spring.springGroupS.common.ProjectProvide;
 import com.spring.springGroupS.service.PdsService;
 import com.spring.springGroupS.vo.PageVO;
 import com.spring.springGroupS.vo.PdsVO;
+import com.spring.springGroupS.vo.ReviewVO;
 
 @Controller
 @RequestMapping("/pds")
@@ -70,32 +68,40 @@ public class PdsController {
 	@GetMapping("/pdsContent")
 	public String pdsContentGet(Model model, int idx, PageVO pageVO) {
 		PdsVO vo = pdsService.getPdsContent(idx);
-		
-		// --------------
-		
-		
 		model.addAttribute("vo", vo);
 		model.addAttribute("pageVO", pageVO);
+		
+		// 등록된 리뷰도 불러와서 함께 content로 보내기
+		List<ReviewVO> reviewVos = pdsService.getReviewList(idx, "pds");
+		model.addAttribute("reviewVos", reviewVos);
+		
+		// 리뷰 별점 평균 구하기
+		int reviewTot = 0;
+		for(ReviewVO r : reviewVos) {
+			reviewTot += r.getStar();
+		}
+		double reviewAvg = 0.0;
+		if(reviewVos.size() != 0) reviewAvg = (double) reviewTot / reviewVos.size();
+		model.addAttribute("reviewAvg", reviewAvg);
 		
 		return "pds/pdsContent";
 	}
 	
-	// 다운로드 수 증가
+	// 다운로드수 증가처리
 	@ResponseBody
 	@PostMapping("/pdsDownNumCheck")
 	public void pdsDownNumCheckPost(int idx) {
-		
 		pdsService.setPdsDownNumCheck(idx);
 	}
-
-	// 자료실 내역 삭제처리(파일삭제 + DB삭제)
+	
+	// 자료실 내역 삭제처리(파일삭제 + DB자료 삭제)
 	@ResponseBody
 	@PostMapping("/pdsDeleteCheck")
 	public int pdsDeleteCheckPost(int idx, String fSName, HttpServletRequest request) {
 		return pdsService.setPdsDeleteCheck(idx, fSName, request);
 	}
-
-	// 자료실 내역 삭제처리(파일삭제 + DB삭제)
+	
+	// 전체파일 다운로드
 	@SuppressWarnings("deprecation")
 	@GetMapping("/pdsTotalDown")
 	public String pdsTotalDownGet(int idx, HttpServletRequest request) throws IOException {
@@ -121,22 +127,20 @@ public class PdsController {
 		
 		byte[] bytes = new byte[2048];
 		
-		for(int i=0; i<fNames.length;i++) {
+		for(int i=0; i<fNames.length; i++) {
 			fis = new FileInputStream(realPath + fSNames[i]);
 			fos = new FileOutputStream(zipPath + fNames[i]);
-			
 			
 			int data = 0;
 			while((data = fis.read(bytes, 0, bytes.length)) != -1) {
 				fos.write(bytes, 0, data);
 			}
-			
 			fos.flush();
 			fos.close();
 			fis.close();
 			
-			// 위쪽 작업이 완료되면 temp방에는 pds에 있던 원본파일이 복사되어 있다.
-			// 복사해온 temp방에 존재하는 파일들을 zip파일에 담아준다
+			// 위쪽작업이 완료되면 pds에 있던 원본파일이 temp방에 복사되어 있다.
+			// 복사해온 temp방에 존재하는 파일들을 zip파일에 담아준다.
 			
 			File copyFile = new File(zipPath + fNames[i]);
 			fis = new FileInputStream(copyFile);
@@ -152,7 +156,8 @@ public class PdsController {
 		zout.close();
 		
 		// 압축된 파일을 다운로드 시켜준다.
-		return "redirect:/fileDownAction?Path=pds&file="+java.net.URLEncoder.encode(zipName);
+		return "redirect:/fileDownAction?path=pds&file="+java.net.URLEncoder.encode(zipName);
 	}
+	
 	
 }
