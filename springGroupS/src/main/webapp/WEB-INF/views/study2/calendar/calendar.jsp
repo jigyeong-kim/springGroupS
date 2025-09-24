@@ -13,6 +13,12 @@
 	height: 80px;
 	vertical-align: middle;
 }
+
+	td.today {
+	  background-color: pink;
+	  color: #fff;
+	  font-weight: bolder;
+	}
 </style>
 </head>
 <body>
@@ -61,15 +67,20 @@
 						</c:forEach>
 						
 						<!-- 달력출력 -->
-						<c:forEach var="i" begin="${1}" end="${lastDay}" varStatus="st">
-							<td>
-								${st.count}
-							</td>
-							<c:if test="${cnt%7 == 0}">
-								</tr><tr>
-							</c:if>
-							<c:set var="cnt" value="${cnt + 1}" />
-						</c:forEach>
+						        <c:forEach var="i" begin="${1}" end="${lastDay}" varStatus="st">
+						          <c:set var="todaySw" value="${yy==toYear && mm==toMonth && st.count==toDay ? 1 : 0}"/>
+						          <td ${todaySw == 1 ? 'class=today' : ''}>
+						            <c:choose>
+						              <c:when test="${cnt % 7 == 1}"><font color="red">${st.count}</font></c:when>
+						              <c:when test="${cnt % 7 == 0}"><font color="blue">${st.count}</font></c:when>
+						              <c:otherwise>${st.count}</c:otherwise>
+						            </c:choose>
+						          </td>
+						          <c:if test="${cnt % 7 == 0}">
+						            </tr><tr>
+						          </c:if>
+						          <c:set var="cnt" value="${cnt + 1}"/>
+						        </c:forEach>
 						
 						<!--  -->
 						<c:if test="${cnt % 7 == 0}">

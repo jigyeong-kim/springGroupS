@@ -4,23 +4,24 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.spring.springGroupS.dao.Study2DAO;
-import com.spring.springGroupS.vo.TransactionVO;
+import com.spring.springGroupS.dao.ScheduleDAO;
+import com.spring.springGroupS.vo.ScheduleVO;
 
 @Service
-public class Study2ServiceImpl implements Study2Service {
+public class ScheduleServiceImpl implements ScheduleService {
 
 	@Autowired
-	Study2DAO study2DAO;
+	ScheduleDAO scheduleDAO;
 
 	@Override
-	public void getCalendar() {
+	public void getScheduleList() {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		
 		// 오늘날짜 저장변수설정
@@ -30,12 +31,12 @@ public class Study2ServiceImpl implements Study2Service {
 		int toDay = calToday.get(Calendar.DATE);
 		
 		Calendar calView = Calendar.getInstance();
-		int yy = request.getParameter("yy")==null ? calView.get(Calendar.YEAR) : Integer.parseInt(request.getParameter("yy"));
-		int mm = request.getParameter("mm")==null ? calView.get(Calendar.MONTH) : Integer.parseInt(request.getParameter("mm"));
+		int yy = request.getParameter("yy") == null ? calView.get(Calendar.YEAR) : Integer.parseInt(request.getParameter("yy"));
+		int mm = request.getParameter("mm") == null ? calView.get(Calendar.MONTH) : Integer.parseInt(request.getParameter("mm"));
 		
-		if(mm < 0) {
+		if(mm < 0) { 
 			mm = 11;
-		  yy--;
+			yy--;	
 		}
 		if(mm > 11) {
 			mm = 0;
@@ -43,8 +44,8 @@ public class Study2ServiceImpl implements Study2Service {
 		}
 		calView.set(yy, mm, 1);
 		
-		int startWeek = calView.get(Calendar.DAY_OF_WEEK);							// 해당년월일의 요일값을 가져온다.
-		int lastDay = calView.getActualMaximum(Calendar.DAY_OF_MONTH);	// 해당월의 마지막 일자를 가져온다.
+		int startWeek = calView.get(Calendar.DAY_OF_WEEK); // 해당년월일의 요일값을 가져온다.
+		int lastDay = calView.getActualMaximum(Calendar.DAY_OF_MONTH); // 해당월의 마지막 일자를 가져온다.
 		
 		// 화면에 보여줄 '이전년/이전월/다음년/다음월' 변수 처리
 		int prevYear = yy;
@@ -56,21 +57,38 @@ public class Study2ServiceImpl implements Study2Service {
 			prevMonth = 11;
 			prevYear--;
 		}
+		
 		if(nextMonth == 12) {
 			nextMonth = 0;
 			nextYear++;
 		}
 		
 		// 이전달력과 다음달력을 위한 변수
-		Calendar calPre = Calendar.getInstance();
-		calPre.set(prevYear, prevMonth, 1);
-		int preLastDay = calPre.getActualMaximum(Calendar.DAY_OF_MONTH);
+		Calendar calPrev = Calendar.getInstance();
+		calPrev.set(prevYear, prevMonth, 1);
+		int prevLastDay = calPrev.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
 		Calendar calNext = Calendar.getInstance();
 		calNext.set(nextYear, nextMonth, 1);
 		int nextStartWeek = calNext.get(Calendar.DAY_OF_WEEK);
 		
-		// ================================
+		//---------------------
+		
+		// 개별 일정을 DB에서 가져와 담아주기
+		HttpSession session = request.getSession();
+		String mid = (String) session.getAttribute("sMid");
+		
+		String ym = "";
+		int intMM = mm + 1;
+		if(intMM >= -1 && intMM <= 9) ym = yy + "-0" + intMM;
+		else ym = yy + "-" + intMM;
+		
+		List<ScheduleVO> vos = scheduleDAO.getScheduleList(mid, ym);
+		request.setAttribute("vos", vos);
+		System.out.println(vos);
+		
+		//---------------------
+		
 		
 		request.setAttribute("toYear", toYear);
 		request.setAttribute("toMonth", toMonth);
@@ -85,49 +103,28 @@ public class Study2ServiceImpl implements Study2Service {
 		request.setAttribute("prevMonth", prevMonth);
 		request.setAttribute("nextYear", nextYear);
 		request.setAttribute("nextMonth", nextMonth);
-		
-		request.setAttribute("preLastDay", preLastDay);
+
+		request.setAttribute("prevLastDay", prevLastDay);
 		request.setAttribute("nextStartWeek", nextStartWeek);
 	}
 
 	@Override
-	public List<TransactionVO> getUserList() {
-		return study2DAO.getUserList();
+	public List<ScheduleVO> getScheduleMenu(String mid, String ymd) {
+		return scheduleDAO.getScheduleMenu(mid, ymd);
 	}
 
 	@Override
-	public int setValidatorFormOk(TransactionVO vo) {
-		return study2DAO.setValidatorFormOk(vo);
+	public int setScheduleInputOk(ScheduleVO vo) {
+		return scheduleDAO.setScheduleInputOk(vo);
 	}
 
 	@Override
-	public int setValidatorDeleteOk(int idx) {
-		return study2DAO.setValidatorDeleteOk(idx);
+	public int setScheduleUpdateOk(ScheduleVO vo) {
+		return scheduleDAO.setScheduleUpdateOk(vo);
 	}
 
 	@Override
-	public List<TransactionVO> getTransactionList() {
-		return study2DAO.getTransactionList();
+	public int setScheduleDeleteOk(int idx) {
+		return scheduleDAO.setScheduleDeleteOk(idx);
 	}
-
-	@Override
-	public List<TransactionVO> getTransactionList2() {
-		return study2DAO.getTransactionList2();
-	}
-
-	@Override
-	public void setTransactionUser1Input(TransactionVO vo) {
-		study2DAO.setTransactionUser1Input(vo);
-	}
-
-	@Override
-	public void setTransactionUser2Input(TransactionVO vo) {
-		study2DAO.setTransactionUser2Input(vo);
-	}
-
-	@Override
-	public void setTransactionUserTotalInput(TransactionVO vo) {
-		study2DAO.setTransactionUserTotalInput(vo);
-	}
-	
 }
