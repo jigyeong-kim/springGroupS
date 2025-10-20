@@ -14,6 +14,25 @@
 	  select c.idx, c.part as part, b.title as title, b.nickName as nickName, c.cpMid as cpMid, c.cpContent as cpContent, date_format(c.cpDate, '%Y-%m-%d %H:%i') as cpDate, c.progress, b.mid as mid, b.content as content from complaint c left join board2 b on c.partIdx=b.idx where c.partIdx=#{partIdx} limit 1;
 	</select>
 	
+	<select id="getScheduleMainList" resultType="com.spring.springGroupS.vo.ScheduleVO">
+		select * from schedule where part = '공지' order by sDate;
+	</select>
+	
+  <select id="getInquiryListAdmin" resultType="com.spring.springGroupS.vo.InquiryVO">
+    select * from inquiry <if test="part != '전체'"> where reply = #{part} </if> order by idx desc limit #{startIndexNo},#{pageSize};
+  </select>
+  
+  <select id="getInquiryContent" resultType="com.spring.springGroupS.vo.InquiryVO">
+    select * from inquiry where idx = #{idx};
+  </select>
+  
+  <select id="getInquiryReplyContent" resultType="com.spring.springGroupS.vo.InquiryReplyVO">
+    select * from inquiryReply where inquiryIdx = #{idx};
+  </select>
+  
+  <select id="getInquiryReplySearch" resultType="com.spring.springGroupS.vo.InquiryReplyVO">
+    select * from inquiryReply where reIdx = #{reIdx};
+  </select>
 	
 	
 	
@@ -22,6 +41,14 @@
 	<insert id="setBoardComplaintInput">
 	  insert into complaint values (default,#{vo.part},#{vo.partIdx},#{vo.cpMid},#{vo.cpContent},default,default);
 	</insert>
+	
+	<insert id="setAdScheduleInput">
+		insert into schedule values (default,#{vo.mid},#{vo.sDate},#{vo.part},#{vo.content});
+	</insert>
+	
+  <insert id="setInquiryInputAdmin">
+    insert into inquiryReply values (default,#{vo.inquiryIdx},default,#{vo.reContent});
+  </insert>
 	
 	
 	
@@ -46,5 +73,27 @@
 	  update ${part} set complaint = 'DE' where idx = #{partIdx};
 	</update>
 	
+  <update id="setInquiryUpdateAdmin">
+    update inquiry set reply = '답변완료' where idx = #{inquiryIdx};
+  </update>
+  
+  <update id="setInquiryReplyUpdate">
+    update inquiryReply set reContent = #{reVO.reContent} where reIdx = #{reVO.reIdx};
+  </update>
+  
+  <update id="setInquiryReplyStatusUpdate">
+    update inquiry set reply = '답변대기중' where idx = #{inquiryIdx};
+  </update>
+  
+  
+
+  <delete id="setAdInquiryReplyDelete">
+    delete from inquiryReply where reIdx = #{reIdx};
+  </delete>
+  
+  <delete id="setAdInquiryDelete">
+    delete from inquiryReply where reIdx = #{reIdx};
+    delete from inquiry where idx = #{idx};
+  </delete>	
 
 </mapper>

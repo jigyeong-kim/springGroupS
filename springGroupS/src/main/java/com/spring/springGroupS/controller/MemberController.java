@@ -170,7 +170,7 @@ public class MemberController {
 		MemberVO vo = memberService.getMemberNickNameEmailCheck(nickName, email);
 		
 		String newMember = "NO";	// 신규회원인지에 대한 정의(신규회원:OK, 기존회원:NO)
-		System.out.println(" vo : " + vo);
+		
 		// 우리 사이트에 첫방문고객이라면, 강제로 회원 가입처리한다.
 		if(vo == null) {
 			String mid = email.substring(0, email.indexOf("@"));
@@ -247,7 +247,6 @@ public class MemberController {
 		if(newMember.equals("NO")) return "redirect:/message/memberLoginOk?mid="+mid;
 		else return "redirect:/message/memberLoginNewOk?mid="+mid;
 	}
-	
 	
 	// 일반 로그아웃 처리
 	@GetMapping("/memberLogout")

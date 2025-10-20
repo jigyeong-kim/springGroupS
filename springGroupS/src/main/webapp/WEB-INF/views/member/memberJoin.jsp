@@ -130,22 +130,22 @@
 			
 			// 전송전에 모든 체크가 끝나면 submitFlag가 1로 되게된다. 이때 값들을 서버로 전송처리한다.
 			if(submitFlag == 1) {
-	    	if(idCheckSw == 0) {
-	    		alert("아이디 중복체크버튼을 눌러주세요");
-	    		document.getElementById("midBtn").focus();
+		    	if(idCheckSw == 0) {
+		    		alert("아이디 중복체크버튼을 눌러주세요");
+		    		document.getElementById("midBtn").focus();
+		    	}
+		    	else if(nickCheckSw == 0) {
+		    		alert("닉네임 중복체크버튼을 눌러주세요");
+		    		document.getElementById("nickNameBtn").focus();
+		    	}
+		    	else {
+		    		myform.email.value = email;
+		    		myform.tel.value = tel;
+		    		myform.address.value = address;
+		    		
+		    		myform.submit();
+		    	}
 	    	}
-	    	else if(nickCheckSw == 0) {
-	    		alert("닉네임 중복체크버튼을 눌러주세요");
-	    		document.getElementById("nickNameBtn").focus();
-	    	}
-	    	else {
-	    		myform.email.value = email;
-	    		myform.tel.value = tel;
-	    		myform.address.value = address;
-	    		
-	    		myform.submit();
-	    	}
-    	}
 			else {
     		alert("회원정보등록 실패~~ 폼의 내용을 확인하세요.");
     	}

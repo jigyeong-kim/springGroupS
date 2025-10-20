@@ -83,14 +83,14 @@
   <div>
     <div class="accordion"><b>일정관리</b></div>
     <div class="panel">
-      <p><a href="${ctp}/admin/guest/adminGuestList" class="a-bg">일정리스트</a></p>
-      <p><a href="" class="a-bg">일정게시</a></p>
+      <p><a href="${ctp}/admin/schedule/adScheduleList" target="adminContent" class="a-bg">일정등록/보기</a></p>
+      <p><a href="#" class="a-bg">전체일정리스트</a></p>
     </div>
   </div>
   <div>
     <div class="accordion"><b>설문조사관리</b></div>
     <div class="panel">
-      <p><a href="${ctp}/admin/guest/adminGuestList" class="a-bg">설문조사등록</a></p>
+      <p><a href="${ctp}/admin/guest/adminGuestList" target="adminContent" class="a-bg">설문조사등록</a></p>
       <p><a href="" class="a-bg">설문조사리스트</a></p>
       <p><a href="" class="a-bg">설문조사분석</a></p>
     </div>
@@ -98,10 +98,10 @@
   <div>
     <div class="accordion"><b>상품관리</b></div>
     <div class="panel">
-      <p><a href="${ctp}/admin/guest/adminGuestList" class="a-bg">상품분류등록</a></p>
-      <p><a href="" class="a-bg">상품등록관리</a></p>
-      <p><a href="" class="a-bg">상품등록조회</a></p>
-      <p><a href="" class="a-bg">옵션등록관리</a></p>
+      <p><a href="${ctp}/dbShop/dbCategory" target="adminContent">상품분류등록</a></p>
+      <p><a href="${ctp}/dbShop/dbProduct" target="adminContent">상품등록관리</a></p>
+      <p><a href="${ctp}/dbShop/dbShopList" target="adminContent">상품등록조회</a></p>
+      <p><a href="${ctp}/dbShop/dbOption" target="adminContent">옵션등록관리</a></p>
       <p><a href="" class="a-bg">주문관리</a></p>
       <p><a href="" class="a-bg">반품관리</a></p>
       <p><a href="" class="a-bg">1:1문의</a></p>
@@ -117,7 +117,7 @@
       <p><a href="" class="a-bg">쿠폰관리</a></p>
       <p><a href="" class="a-bg">임시파일관리</a></p>
       <p><a href="" class="a-bg">실시간상담</a></p>
-      <p><a href="" class="a-bg">1:1문의</a></p>
+      <p><a href="${ctp}/admin/inquiry/adInquiryList" class="a-bg" target="adminContent">1:1문의</a></p>
       <p><a href="" class="a-bg">상품메인이미지관리</a></p>
     </div>
   </div>

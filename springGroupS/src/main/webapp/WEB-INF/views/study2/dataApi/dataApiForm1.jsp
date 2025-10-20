@@ -246,7 +246,8 @@
 	      <option ${policeZone=='경남' ? 'selected' : ''}>경남</option>
 	      <option ${policeZone=='제주' ? 'selected' : ''}>제주</option>
 	    </select>
-	    <input type="button" value="년도/경찰서별출력" onclick="yearPoliceCheck()" class="btn btn-secondary mr-2" />
+	    <!-- <input type="button" value="년도/경찰서별출력" onclick="yearPoliceCheck()" class="btn btn-secondary mr-2" /> -->
+	    <input type="submit" value="년도/경찰서별출력" class="btn btn-secondary mr-2" />
 		</div>
   </form>
   <hr class="border-1 border-dark">

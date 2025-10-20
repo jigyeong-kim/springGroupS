@@ -12,6 +12,8 @@ public class CrimeVO {
 	private int murder;
 	private int violence;
 	
+	private String policeZone;
+	
 	private int totRobbery;
 	private int totMurder;
 	private int totTheft;

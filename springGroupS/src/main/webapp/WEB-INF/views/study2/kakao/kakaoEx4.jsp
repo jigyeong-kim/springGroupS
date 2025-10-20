@@ -9,7 +9,8 @@
   <jsp:include page="/WEB-INF/views/include/bs5.jsp" />
   <script>
 	  function addressSave() {
-	  	let address = myform.selectAddress.value;
+	  	let address = myform.address.value;
+	  	if(address.trim() == "") address = myform.selectAddress.value;
 	  	let latitude = myform.latitude.value;
 	  	let longitude = myform.longitude.value;
 	  	if(address == "") {
@@ -114,6 +115,7 @@
 		        $("#latitude").val(place.y);
 		        $("#longitude").val(place.x);
 		        $("#demo").html("장소명:"+place.place_name+" , 위도:"+place.y+" , 경도:"+place.x);
+		        $("#address").val(place.place_name);
 		    });
 		} 
 	</script>
