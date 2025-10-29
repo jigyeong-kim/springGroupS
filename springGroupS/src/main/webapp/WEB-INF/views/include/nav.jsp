@@ -28,7 +28,7 @@
 <div class="w3-top">
   <div class="w3-bar w3-black w3-card">
     <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-    <!-- <a href="http://192.168.50.62:9090/springGroupS/" class="w3-bar-item w3-button w3-padding-large">HOME</a> -->
+    <!-- <a href="http://192.168.50.20:9090/springGroupS/" class="w3-bar-item w3-button w3-padding-large">HOME</a> -->
     <a href="http://localhost:9090/springGroupS/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
     <a href="${ctp}/guest/guestList" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Guest</a>
     <c:if test="${sLevel <= 3}">
@@ -66,6 +66,10 @@
  		        <a href="${ctp}/study2/weather/weatherForm" class="w3-bar-item w3-button">날씨정보</a>
 		        <a href="${ctp}/study2/qrCode/qrCodeForm" class="w3-bar-item w3-button">QR코드</a>
 		        <a href="${ctp}/study2/thumbnail/thumbnailForm" class="w3-bar-item w3-button">썸네일연습</a>
+		        <a href="${ctp}/study2/moment/momentForm" class="w3-bar-item w3-button">Moment라이브러리연습</a>
+		        <a href="${ctp}/error/errorForm" class="w3-bar-item w3-button">errorPage연습</a>
+		        <a href="${ctp}/study2/crawling/jsoup" class="w3-bar-item w3-button">크롤링연습1</a>
+		        <a href="${ctp}/study2/crawling/selenium" class="w3-bar-item w3-button">크롤링연습2</a>
 		      </div>
 		    </div>
 		    <div class="w3-dropdown-hover w3-hide-small">
@@ -86,10 +90,11 @@
 	      <div class="w3-dropdown-content w3-bar-block w3-card-4">
 	        <c:if test="${sLevel < 3}">
 		        <a href="${ctp}/schedule/schedule" class="w3-bar-item w3-button">일정관리</a>
-		        <a href="${ctp}/study1/aop/aopMenu" class="w3-bar-item w3-button">웹메세지</a>
+		        <a href="#" class="w3-bar-item w3-button">웹메세지</a>
 		        <a href="${ctp}/webSocket/webSocket" class="w3-bar-item w3-button">웹소켓 채팅</a>
-		        <a href="${ctp}/study1/xml/xmlMenu" class="w3-bar-item w3-button">Photo Gallery</a>
+		        <a href="${ctp}/photoGallery/photoGalleryList" class="w3-bar-item w3-button">Photo Gallery</a>
 		        <a href="${ctp}/member/memberList" class="w3-bar-item w3-button">회원리스트</a>
+		        <a href="#" class="w3-bar-item w3-button">스케줄러연습(자동)</a>
 	        </c:if>
 	        <a href="${ctp}/member/memberPwdCheck/p" class="w3-bar-item w3-button">비밀번호변경</a>
 	        <a href="${ctp}/member/memberPwdCheck/u" class="w3-bar-item w3-button">회원정보수정</a>

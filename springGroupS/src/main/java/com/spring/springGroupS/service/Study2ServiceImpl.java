@@ -25,6 +25,7 @@ import com.spring.springGroupS.common.ProjectProvide;
 import com.spring.springGroupS.dao.Study2DAO;
 import com.spring.springGroupS.vo.CrimeVO;
 import com.spring.springGroupS.vo.KakaoAddressVO;
+import com.spring.springGroupS.vo.KakaoPlaceVO;
 import com.spring.springGroupS.vo.QrCodeVO;
 import com.spring.springGroupS.vo.TransactionVO;
 
@@ -281,6 +282,21 @@ public class Study2ServiceImpl implements Study2Service {
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	@Override
+	public KakaoAddressVO getKakaoAddressSearchIdx(int idx) {
+		return study2DAO.getKakaoAddressSearchIdx(idx);
+	}
+
+	@Override
+	public List<KakaoPlaceVO> getKakaoAddressPlaceSearch(int idx) {
+		return study2DAO.getKakaoAddressPlaceSearch(idx);
+	}
+
+	@Override
+	public int setKakaoPlaceInput(KakaoPlaceVO vo) {
+		return study2DAO.setKakaoPlaceInput(vo);
 	}
 	
 }

@@ -60,10 +60,12 @@
           <c:if test="${vo.openSw == 'NO'}">
             <c:if test="${sMid != vo.mid && sAdmin != 'adminOK'}">(비밀글)</c:if>
             <c:if test="${sMid == vo.mid || sAdmin == 'adminOK'}">
-		          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
-		            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>${vo.title}
-		          </a> <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
-		          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+	          <a href="boardContent?idx=${vo.idx}&pag=${pageVO.pag}&pageSize=${pageVO.pageSize}" class="text-decoration-none text-dark link-primary">
+	            <c:if test="${sAdmin == 'adminOK'}"><font color="red">(비밀글)</font></c:if>
+	            ${vo.title}
+	          </a> 
+	          <c:if test="${vo.hour_diff <= 24}"><img src="${ctp}/images/new.gif" /></c:if>
+	          <c:if test="${vo.replyCnt != 0}"><span class="badge bg-secondary">${vo.replyCnt}</span></c:if>
             </c:if>
           </c:if>
           <c:if test="${vo.openSw != 'NO'}">
